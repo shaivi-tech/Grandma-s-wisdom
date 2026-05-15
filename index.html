@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuskhe Courtyard | Interactive Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5ede0;
+      --sepia-dark: #3b2a1a;
+      --sepia-mid: #7a5c3a;
+      --sepia-light: #c9a97a;
+      --green-deep: #2d4a2d;
+      --green-mid: #4a7c59;
+      --green-light: #8fbc8f;
+      --terracotta: #c1440e;
+      --terra-soft: #e8875a;
+      --blue-cold: #1a2a4a;
+      --blue-mid: #2e4a7a;
+      --gold: #d4a017;
+      --ghost: rgba(245, 237, 224, 0.08);
+      --mystic-blue: #1c1c2e;
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--cream);
+      background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+      color: var(--sepia-dark);
+      margin: 0;
+      overflow-x: hidden;
+      cursor: none;
+      font-family: 'Lora', serif;
+    }
+
+    section {
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       FRAME 1 — NUSKHE COURTYARD (Restored exactly from index_2)
+    ============================================================ */
+    #frame-courtyard {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      cursor: none;
+    }
+
+
+
+    .cy-title-block {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .cy-dadi-ke {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.45em;
+      color: #5a3a10;
+      opacity: 0.65;
+      display: block;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .cy-nuskhe {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-style: italic;
+      color: #2d1a08;
+      display: block;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       FRAME 1 — NUSKHE COURTYARD (Jhula + Shelves)
+    ============================================================ */
+    #frame-courtyard {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      background: #f7f2e4;
+      cursor: none;
+    }
+
+    /* Tile border */
+    .cy-tile-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: #ddeaf5;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .cy-tile-border::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(58, 95, 160, 0.25);
+    }
+
+    /* Title block */
+    .cy-title-block {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .cy-dadi-ke {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.45em;
+      color: #5a3a10;
+      opacity: 0.65;
+      display: block;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .cy-nuskhe {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-style: italic;
+      color: #2d1a08;
+      display: block;
+      line-height: 1;
+    }
+
+    /* Shelves */
+    .cy-shelf {
+      position: absolute;
+      top: 68px;
+      bottom: 0;
+      width: 220px;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .cy-shelf-left {
+      left: 0;
+    }
+
+    .cy-shelf-right {
+      right: 0;
+    }
+
+    /* Jhula */
+    .cy-jhula {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 68px;
+      z-index: 12;
+      pointer-events: none;
+      animation: jhulaSway 5s ease-in-out infinite;
+      transform-origin: center top;
+    }
+
+    @keyframes jhulaSway {
+
+      0%,
+      100% {
+        transform: translateX(-50%) rotate(-2deg);
+      }
+
+      50% {
+        transform: translateX(-50%) rotate(2deg);
+      }
+    }
+
+    /* Snap silhouettes on shelves */
+    .cy-sil {
+      position: absolute;
+      opacity: 0.18;
+      pointer-events: none;
+      transition: opacity 0.4s, filter 0.4s;
+    }
+
+    .cy-sil.pulse {
+      animation: silPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes silPulse {
+
+      0%,
+      100% {
+        opacity: 0.15;
+      }
+
+      50% {
+        opacity: 0.35;
+      }
+    }
+
+    .cy-sil.filled {
+      opacity: 0 !important;
+      transition: none !important;
+      animation: none;
+    }
+
+    /* Draggable plants */
+    .cy-plant {
+      position: absolute;
+      cursor: none;
+      user-select: none;
+      transition: filter 0.2s, transform 0.2s;
+      z-index: 30;
+      touch-action: none;
+    }
+
+    .cy-plant:hover {
+      filter: brightness(1.12) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    }
+
+    .cy-plant.dragging {
+      z-index: 100;
+      filter: drop-shadow(0 0 16px rgba(100, 160, 60, 0.5));
+      transform: scale(1.07);
+    }
+
+    .cy-plant.snapped {
+      transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    /* Hero text reveal */
+    .cy-hero {
+      position: absolute;
+      bottom: 240px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 40;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .cy-hero-line {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-style: italic;
+      color: rgba(45, 26, 8, 0);
+      display: block;
+      line-height: 1.3;
+      transition: color 0.9s ease, text-shadow 0.9s ease;
+    }
+
+    .cy-hero-line.word-revealed {
+      color: rgba(45, 26, 8, 0.88);
+      text-shadow: 0 2px 20px rgba(180, 120, 40, 0.2);
+    }
+
+    .cy-hero-sub {
+      font-family: 'Lora', serif;
+      font-size: 1.125rem;
+      color: rgba(90, 58, 16, 0);
+      font-style: italic;
+      margin-top: 1rem;
+      display: block;
+      transition: color 1.2s ease;
+    }
+
+    .cy-hero-sub.revealed {
+      color: rgba(90, 58, 16, 0.65);
+    }
+
+    /* Twinkling stars */
+    .cy-star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: twinkle var(--dur) ease-in-out var(--delay) infinite;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.8;
+        transform: scale(1.4);
+      }
+    }
+
+    .cy-drag-hint {
+      position: absolute;
+      bottom: 165px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Lora', serif;
+      font-size: 1.125rem;
+      color: rgba(90, 58, 16, 0.45);
+      letter-spacing: 0.08em;
+      pointer-events: none;
+      z-index: 40;
+      text-align: center;
+      animation: hintPulse 3s ease-in-out infinite;
+    }
+
+    .cy-drag-hint.hidden {
+      opacity: 0 !important;
+      animation: none;
+    }
+
+    @keyframes hintPulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    .cy-scroll-cue {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(90, 58, 16, 0.5);
+      font-family: 'Lora', serif;
+      font-size: 1.125rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+      animation: scrollCueBob 3s ease-in-out infinite;
+    }
+
+    .cy-scroll-cue.visible {
+      opacity: 1;
+    }
+
+    @keyframes scrollCueBob {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-6px);
+      }
+    }
+
+    .cy-scroll-leaf {
+      font-size: 1.2rem;
+      display: block;
+    }
+
+    #cy-cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background-color: var(--terracotta);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 4px rgba(193, 68, 14, 0.4);
+    }
+
+    #leafBurstCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .cy-star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #8b6520;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: twinkle var(--dur) ease-in-out infinite var(--delay);
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    #cy-cursor.wilting svg {
+      animation: leafWilt 0.6s ease forwards;
+    }
+
+    @keyframes leafWilt {
+      0% {
+        transform: rotate(-8deg);
+      }
+
+      50% {
+        transform: rotate(30deg) scaleY(0.7);
+      }
+
+      100% {
+        transform: rotate(20deg) scaleY(0.5);
+        opacity: 0.5;
+      }
+    }
+
+    /* SECTION 2: GEN SELECTOR */
+    .table-surface {
+      background: linear-gradient(rgba(59, 42, 26, 0.05), rgba(59, 42, 26, 0.05)),
+        url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1), 0 20px 50px rgba(0, 0, 0, 0.1);
+      border-radius: 40px;
+    }
+
+    .flower-bale-border {
+      position: absolute;
+      pointer-events: none;
+      width: 120px;
+      opacity: 0.6;
+    }
+
+    .flower-top-left {
+      top: -30px;
+      left: -30px;
+      transform: rotate(-15deg);
+    }
+
+    .flower-bottom-right {
+      bottom: -30px;
+      right: -30px;
+      transform: rotate(165deg);
+    }
+
+    .item-card {
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+
+    .item-card:hover {
+      transform: translateY(-15px) scale(1.05);
+    }
+
+    .item-card.selected {
+      transform: translateY(-10px) scale(1.1);
+      filter: drop-shadow(0 0 25px rgba(193, 68, 14, 0.3));
+    }
+
+    .ink-reveal {
+      background: linear-gradient(90deg, transparent, #c1440e, transparent);
+      height: 2px;
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    .selected .ink-reveal {
+      width: 100%;
+    }
+
+    /* SECTION 3: 3D MAP */
+    .isometric-view {
+      transform: rotateX(55deg) rotateZ(-45deg);
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+      margin-top: 20px;
+    }
+
+    .remedy-block {
+      transform-style: preserve-3d;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .remedy-block:hover {
+      transform: translateZ(40px);
+      z-index: 100;
+    }
+
+    .face {
+      position: absolute;
+      border: 1px solid rgba(59, 42, 26, 0.2);
+      box-sizing: border-box;
+    }
+
+    .face-top {
+      transform: translateZ(var(--block-height));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      text-align: center;
+      background-color: var(--block-color);
+      opacity: 1;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .face-front {
+      background-color: var(--block-color-dark);
+      transform: rotateX(-90deg);
+      transform-origin: bottom;
+      height: var(--block-height);
+      width: 100%;
+      bottom: 0;
+    }
+
+    .face-right {
+      background-color: var(--block-color-darker);
+      transform: rotateY(90deg);
+      transform-origin: left;
+      width: var(--block-height);
+      height: 100%;
+      right: calc(var(--block-height) * -1);
+      top: 0;
+    }
+
+    /* SECTION 4: BUBBLE PLOT */
+    .era-row {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px dashed rgba(139, 101, 32, 0.1);
+    }
+
+    .era-label {
+      width: 180px;
+      font-weight: 600;
+      color: #5a3a10;
+      padding-left: 2rem;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .bubble {
+      border-radius: 50%;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+
+    .bubble:hover {
+      transform: scale(1.3);
+      z-index: 50;
+    }
+
+    .event-marker {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 15px solid #c1440e;
+      position: absolute;
+      bottom: 15px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .event-marker:hover {
+      transform: scale(1.5);
+    }
+
+    .pattern-border {
+      height: 10px;
+      background-image: radial-gradient(circle, #8ba8cc 1.5px, transparent 1.5px);
+      background-size: 8px 8px;
+      opacity: 0.3;
+      width: 100%;
+    }
+
+    /* SECTION 5: CARD YARD */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    .card {
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+      cursor: pointer;
+      position: absolute;
+      width: 150px;
+      height: 245px;
+      margin-left: -75px;
+      margin-top: -122px;
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+
+    .card:hover {
+      transform: var(--base-transform) translateY(-30px) scale(1.08) !important;
+      z-index: 500;
+    }
+
+    .stitch-card-pattern {
+      background-image: url("images/card des.jpg");
+      background-size: cover;
+      background-position: center;
+      border: 6px solid #fffff0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border-radius: 1.5rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 28, 46, 0.4);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      width: 650px;
+      max-width: 95vw;
+      background: #fffdfa;
+      border-radius: 24px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+      transform: scale(0.8);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(122, 92, 58, 0.1);
+      position: relative;
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    #modal-body {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Modal Columns */
+    .modal-illustration {
+      width: 45%;
+      background: #fdfbf7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border-right: 1px dashed rgba(122, 92, 58, 0.2);
+      position: relative;
+    }
+
+    .modal-illustration img {
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+    }
+
+    .modal-details {
+      width: 55%;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .modal-tag {
+      font-family: 'Kalam', cursive;
+      font-size: 0.8rem;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-style: italic;
+      color: var(--sepia-dark);
+      margin-bottom: 1.2rem;
+      line-height: 1;
+    }
+
+    .modal-detail-section {
+      margin-bottom: 1.2rem;
+    }
+
+    .modal-label {
+      font-family: 'Kalam', cursive;
+      font-size: 0.9rem;
+      color: var(--sepia-mid);
+      margin-bottom: 0.25rem;
+      opacity: 0.7;
+    }
+
+    .modal-text {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--sepia-dark);
+      opacity: 0.9;
+    }
+
+    .tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: #2d1a08;
+      color: #fdfbf2;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 2000;
+      font-family: 'Kalam', cursive;
+    }
+
+    /* SECTION 6: HERITAGE FRAME */
+    #heritage-section {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hanging-plant-dec {
+      position: absolute;
+      top: -20px;
+      width: 280px;
+      height: auto;
+      pointer-events: none;
+      z-index: 10;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+    }
+
+    .hp-left {
+      left: 5%;
+      transform: rotate(-5deg);
+    }
+
+    .hp-right {
+      right: 5%;
+      transform: scaleX(-1) rotate(-5deg);
+    }
+
+    .sketch-input-group {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .sketch-label {
+      font-family: 'Lora', serif;
+      font-size: 1.125rem;
+      color: var(--sepia-mid);
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    .sketch-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(122, 92, 58, 0.3);
+      font-family: 'Lora', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      padding: 0.5rem 0;
+      color: var(--sepia-dark);
+      transition: border-color 0.4s ease;
+    }
+
+    .sketch-input:focus {
+      outline: none;
+      border-bottom-color: var(--terracotta);
+    }
+
+    .sketch-textarea {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid rgba(122, 92, 58, 0.15);
+      border-radius: 4px;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      padding: 1rem;
+      min-height: 120px;
+      resize: none;
+      color: var(--sepia-dark);
+    }
+
+    .btn-preserve {
+      margin-top: 1rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--terracotta);
+      background: transparent;
+      border: 1px solid rgba(193, 68, 14, 0.3);
+      padding: 0.75rem 2.5rem;
+      border-radius: 100px;
+      cursor: none;
+      transition: all 0.4s ease;
+    }
+
+    .btn-preserve:hover {
+      background: var(--terracotta);
+      color: white;
+      box-shadow: 0 8px 20px rgba(193, 68, 14, 0.2);
+    }
+
+    #heritage-success {
+      display: none;
+      animation: inkFade 1.5s ease-out forwards;
+    }
+
+    @keyframes inkFade {
+      from {
+        opacity: 0;
+        filter: blur(5px);
+      }
+
+      to {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    /* Herb Accents */
+    .herb-accent {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.8;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.05));
+      animation: herbFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes herbFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0);
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(2deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Global Canvas & Cursor -->
+  <canvas id="leafBurstCanvas"></canvas>
+  <div id="cy-cursor"></div>
+
+
+  <section id="frame-courtyard">
+    <div id="cyStars"></div>
+
+    <!-- Floral tile border top -->
+    <div class="cy-tile-border">
+      <svg width="100%" height="68" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="floraltile" x="0" y="0" width="68" height="68" patternUnits="userSpaceOnUse">
+            <rect width="68" height="68" fill="#ddeaf5" />
+            <rect x="2" y="2" width="64" height="64" fill="none" stroke="#3a5fa0" stroke-width="0.5" opacity="0.3" />
+            <!-- 8-petal flower -->
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(45,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(90,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(135,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(180,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(225,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(270,34,34)" />
+            <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+              transform="rotate(315,34,34)" />
+            <circle cx="34" cy="34" r="4" fill="none" stroke="#3a5fa0" stroke-width="1.2" />
+            <circle cx="34" cy="34" r="2" fill="#3a5fa0" opacity="0.6" />
+            <!-- Corner buds -->
+            <circle cx="10" cy="10" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+            <circle cx="58" cy="10" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+            <circle cx="10" cy="58" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+            <circle cx="58" cy="58" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+            <!-- Leaf pairs -->
+            <path d="M15 15 Q20 9 19 19 Q13 18 15 15Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+            <path d="M53 15 Q48 9 49 19 Q55 18 53 15Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+            <path d="M15 53 Q20 59 19 49 Q13 50 15 53Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+            <path d="M53 53 Q48 59 49 49 Q55 50 53 53Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+            <!-- Edge dots -->
+            <circle cx="34" cy="5" r="2" fill="#3a5fa0" opacity="0.45" />
+            <circle cx="34" cy="63" r="2" fill="#3a5fa0" opacity="0.45" />
+            <circle cx="5" cy="34" r="2" fill="#3a5fa0" opacity="0.45" />
+            <circle cx="63" cy="34" r="2" fill="#3a5fa0" opacity="0.45" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="68" fill="url(#floraltile)" />
+        <line x1="0" y1="67" x2="100%" y2="67" stroke="#3a5fa0" stroke-width="1.5" opacity="0.25" />
+      </svg>
+    </div>
+
+    <!-- Title — shifted down -->
+    <div class="cy-title-block">
+      <span class="cy-dadi-ke">DADI ke</span>
+      <span class="cy-nuskhe">Nuskhe</span>
+    </div>
+
+    <!-- LEFT SHELF (straight vertical posts) -->
+    <svg class="cy-shelf cy-shelf-left" viewBox="0 0 220 640" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <!-- Posts -->
+      <rect x="18" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+      <rect x="189" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+      <!-- Shelves -->
+      <rect x="10" y="108" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="228" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="348" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="468" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="578" width="200" height="12" rx="3" fill="#8b5020" />
+
+      <!-- Shelf 1: hanging succulent left + cactus right (FILLED) -->
+      <g transform="translate(65,108)">
+        <rect x="-20" y="-16" width="40" height="16" rx="5" fill="#c1440e" />
+        <ellipse cx="0" cy="-16" rx="20" ry="5" fill="#d4653a" />
+        <ellipse cx="0" cy="-40" rx="22" ry="22" fill="#3d8028" />
+        <path d="M-18-16 Q-28 10 -24 36 Q-18 52 -22 68" fill="none" stroke="#5aaa38" stroke-width="2" />
+        <path d="M18-16 Q28 10 24 36" fill="none" stroke="#5aaa38" stroke-width="2" />
+        <ellipse cx="-22" cy="70" rx="7" ry="5" fill="#4a9028" />
+      </g>
+      <g transform="translate(160,108)">
+        <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+        <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+        <rect x="-8" y="-62" width="16" height="50" rx="8" fill="#4a8a20" />
+        <rect x="-19" y="-52" width="13" height="24" rx="6" fill="#5a9a28" />
+        <rect x="6" y="-47" width="13" height="20" rx="6" fill="#5a9a28" />
+        <line x1="-8" y1="-52" x2="-8" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+        <line x1="0" y1="-60" x2="0" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+        <line x1="8" y1="-52" x2="8" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+      </g>
+
+      <!-- Shelf 2: DOTTED left + sansevieria right -->
+      <g id="svg-target-1" transform="translate(65,228)" opacity="0.22" fill="none" stroke="#3a6018"
+        stroke-dasharray="3,2" stroke-width="1.3">
+        <path d="M-24 2 Q-28-16 -24-32 Q-18-48 0-50 Q18-48 24-32 Q28-16 24 2Z" />
+        <ellipse cx="0" cy="2" rx="24" ry="6" />
+        <line x1="0" y1="0" x2="0" y2="-42" />
+        <path d="M0-18 Q-16-14 -18-28 Q-8-24 0-18Z" />
+        <path d="M0-18 Q16-14 18-28 Q8-24 0-18Z" />
+      </g>
+      <g transform="translate(160,228)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#8a7060" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#a09080" />
+        <path d="M-10-14 Q-14-52 -7-84 Q0-94 7-84 Q14-52 10-14Z" fill="#3d7a28" />
+        <path d="M-6-14 Q-10-48 -3-74 Q2-82 7-74 Q11-48 7-14Z" fill="#5aaa40" opacity="0.8" />
+        <path d="M-14-14 Q-18-44 -12-64 Q-7-72 -2-64 Q2-44 -2-14Z" fill="#3d7a28" />
+        <path d="M-10-14 Q-14-52 -7-82" fill="none" stroke="#d4c030" stroke-width="1.5" opacity="0.65" />
+        <path d="M10-14 Q14-52 7-82" fill="none" stroke="#d4c030" stroke-width="1.5" opacity="0.65" />
+      </g>
+
+      <!-- Shelf 3: tulsi left + fern right (FILLED) -->
+      <g transform="translate(65,348)">
+        <rect x="-22" y="-18" width="44" height="18" rx="5" fill="#b84020" />
+        <ellipse cx="0" cy="-18" rx="22" ry="5" fill="#d0603a" />
+        <ellipse cx="0" cy="-52" rx="28" ry="30" fill="#2d6a18" />
+        <ellipse cx="-16" cy="-36" rx="16" ry="22" fill="#3d8028" />
+        <ellipse cx="16" cy="-36" rx="16" ry="22" fill="#3d8028" />
+        <ellipse cx="0" cy="-68" rx="14" ry="18" fill="#5aaa38" />
+        <circle cx="-3" cy="-76" r="3" fill="#8a3aaa" />
+        <circle cx="4" cy="-79" r="2.5" fill="#9a4aba" />
+        <circle cx="0" cy="-83" r="3" fill="#8a3aaa" />
+      </g>
+      <g transform="translate(160,348)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+        <line x1="0" y1="-13" x2="0" y2="-62" stroke="#3a6018" stroke-width="2" />
+        <path d="M0-28 Q-18-24 -16-36 Q-8-32 0-28Z" fill="#5aaa38" />
+        <path d="M0-28 Q18-24 16-36 Q8-32 0-28Z" fill="#5aaa38" />
+        <path d="M0-44 Q-16-38 -14-50 Q-6-46 0-44Z" fill="#4a9a28" />
+        <path d="M0-44 Q16-38 14-50 Q6-46 0-44Z" fill="#4a9a28" />
+        <path d="M0-56 Q-10-52 -8-64 Q-2-60 0-56Z" fill="#5aaa38" />
+        <path d="M0-56 Q10-52 8-64 Q2-60 0-56Z" fill="#5aaa38" />
+      </g>
+
+      <!-- Shelf 4: monstera left + DOTTED right -->
+      <g transform="translate(65,468)">
+        <rect x="-18" y="-16" width="36" height="16" rx="4" fill="#c06030" />
+        <ellipse cx="0" cy="-16" rx="18" ry="4" fill="#d08050" />
+        <path d="M0-16 Q-10-28 -6-50 Q0-58 6-50 Q10-28 0-16Z" fill="#2d6a18" />
+        <path d="M0-28 Q-22-34 -24-52 Q-14-50 0-28Z" fill="#3d8028" />
+        <path d="M0-28 Q22-34 24-52 Q14-50 0-28Z" fill="#3d8028" />
+        <path d="M0-44 Q-16-48 -16-64 Q-8-62 0-44Z" fill="#4a9030" />
+        <path d="M0-44 Q16-48 16-64 Q8-62 0-44Z" fill="#4a9030" />
+      </g>
+      <g id="svg-target-2" transform="translate(160,468)" opacity="0.22" fill="none" stroke="#3a6018"
+        stroke-dasharray="3,2" stroke-width="1.3">
+        <path d="M-18 2 Q-20-12 -16-26 Q-10-40 0-42 Q10-40 16-26 Q20-12 18 2Z" />
+        <ellipse cx="0" cy="2" rx="18" ry="4" />
+        <ellipse cx="0" cy="-50" rx="20" ry="18" />
+        <line x1="0" y1="1" x2="0" y2="-34" />
+      </g>
+
+      <!-- Shelf 5: DOTTED left + small plant right -->
+      <g id="svg-target-3" transform="translate(65,578)" opacity="0.22" fill="none" stroke="#3a6018"
+        stroke-dasharray="3,2" stroke-width="1.3">
+        <path d="M-22 2 Q-26-14 -22-30 Q-16-44 0-46 Q16-44 22-30 Q26-14 22 2Z" />
+        <ellipse cx="0" cy="2" rx="22" ry="5" />
+        <ellipse cx="0" cy="-54" rx="24" ry="20" />
+        <line x1="0" y1="1" x2="0" y2="-36" />
+      </g>
+      <g transform="translate(160,578)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+        <ellipse cx="0" cy="-44" rx="20" ry="28" fill="#3d8028" />
+        <ellipse cx="-13" cy="-30" rx="13" ry="18" fill="#5aaa38" opacity="0.85" />
+        <ellipse cx="13" cy="-30" rx="13" ry="18" fill="#5aaa38" opacity="0.85" />
+      </g>
+    </svg>
+
+    <!-- RIGHT SHELF -->
+    <svg class="cy-shelf cy-shelf-right" viewBox="0 0 220 640" preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect x="18" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+      <rect x="189" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+      <rect x="10" y="108" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="228" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="348" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="468" width="200" height="12" rx="3" fill="#8b5020" />
+      <rect x="10" y="578" width="200" height="12" rx="3" fill="#8b5020" />
+
+      <!-- Shelf 1: big tulsi + cactus (FILLED) -->
+      <g transform="translate(65,108)">
+        <rect x="-20" y="-18" width="40" height="18" rx="5" fill="#c1440e" />
+        <ellipse cx="0" cy="-18" rx="20" ry="5" fill="#d4653a" />
+        <ellipse cx="0" cy="-54" rx="25" ry="32" fill="#2d6a18" />
+        <ellipse cx="-15" cy="-38" rx="15" ry="22" fill="#3d8028" />
+        <ellipse cx="15" cy="-38" rx="15" ry="22" fill="#3d8028" />
+        <ellipse cx="0" cy="-70" rx="13" ry="17" fill="#5aaa38" />
+      </g>
+      <g transform="translate(160,108)">
+        <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+        <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+        <rect x="-8" y="-64" width="16" height="52" rx="8" fill="#4a8a20" />
+        <rect x="-19" y="-52" width="13" height="22" rx="6" fill="#5a9a28" />
+        <rect x="6" y="-46" width="13" height="18" rx="6" fill="#5a9a28" />
+      </g>
+
+      <!-- Shelf 2: DOTTED left + monstera right -->
+      <g id="svg-target-4" transform="translate(65,228)" opacity="0.22" fill="none" stroke="#3a6018"
+        stroke-dasharray="3,2" stroke-width="1.3">
+        <path d="M-24 2 Q-28-18 -24-34 Q-18-48 0-50 Q18-48 24-34 Q28-18 24 2Z" />
+        <ellipse cx="0" cy="2" rx="24" ry="6" />
+        <line x1="0" y1="0" x2="0" y2="-42" />
+        <path d="M0-20 Q-16-16 -18-30 Q-8-26 0-20Z" />
+        <path d="M0-20 Q16-16 18-30 Q8-26 0-20Z" />
+      </g>
+      <g transform="translate(160,228)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+        <path d="M0-14 Q-10-28 -6-52 Q0-60 6-52 Q10-28 0-14Z" fill="#2d6a18" />
+        <path d="M0-30 Q-22-34 -22-52 Q-14-50 0-30Z" fill="#3d8028" />
+        <path d="M0-30 Q22-34 22-52 Q14-50 0-30Z" fill="#3d8028" />
+        <path d="M0-44 Q-16-48 -16-62 Q-8-60 0-44Z" fill="#4a9030" />
+        <path d="M0-44 Q16-48 16-62 Q8-60 0-44Z" fill="#4a9030" />
+      </g>
+
+      <!-- Shelf 3: trailing plant + fern (FILLED) -->
+      <g transform="translate(65,348)">
+        <rect x="-18" y="-16" width="36" height="16" rx="4" fill="#b84020" />
+        <ellipse cx="0" cy="-16" rx="18" ry="4" fill="#d0603a" />
+        <ellipse cx="0" cy="-44" rx="22" ry="26" fill="#3d8028" />
+        <path d="M-18-16 Q-30 10 -26 34" fill="none" stroke="#5aaa38" stroke-width="2" />
+        <path d="M18-16 Q30 10 26 34 Q20 50 24 64" fill="none" stroke="#5aaa38" stroke-width="2" />
+        <ellipse cx="-26" cy="36" rx="7" ry="5" fill="#4a9028" />
+      </g>
+      <g transform="translate(160,348)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#8a7060" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#a09080" />
+        <line x1="0" y1="-13" x2="0" y2="-60" stroke="#3a6018" stroke-width="2" />
+        <path d="M0-26 Q-18-22 -16-34 Q-8-30 0-26Z" fill="#5aaa38" />
+        <path d="M0-26 Q18-22 16-34 Q8-30 0-26Z" fill="#5aaa38" />
+        <path d="M0-40 Q-14-36 -12-48 Q-6-44 0-40Z" fill="#4a9a28" />
+        <path d="M0-40 Q14-36 12-48 Q6-44 0-40Z" fill="#4a9a28" />
+        <path d="M0-52 Q-10-48 -8-60 Q-2-56 0-52Z" fill="#5aaa38" />
+        <path d="M0-52 Q10-48 8-60 Q2-56 0-52Z" fill="#5aaa38" />
+      </g>
+
+      <!-- Shelf 4: big plant + DOTTED right -->
+      <g transform="translate(65,468)">
+        <rect x="-20" y="-16" width="40" height="16" rx="5" fill="#c06030" />
+        <ellipse cx="0" cy="-16" rx="20" ry="5" fill="#d08050" />
+        <ellipse cx="0" cy="-46" rx="24" ry="28" fill="#2d6a18" />
+        <ellipse cx="-15" cy="-32" rx="15" ry="20" fill="#3d8028" />
+        <ellipse cx="15" cy="-32" rx="15" ry="20" fill="#3d8028" />
+        <ellipse cx="0" cy="-62" rx="13" ry="16" fill="#5aaa38" />
+      </g>
+      <g id="svg-target-5" transform="translate(160,468)" opacity="0.22" fill="none" stroke="#3a6018"
+        stroke-dasharray="3,2" stroke-width="1.3">
+        <path d="M-18 2 Q-20-14 -16-28 Q-10-40 0-42 Q10-40 16-28 Q20-14 18 2Z" />
+        <ellipse cx="0" cy="2" rx="18" ry="4" />
+        <ellipse cx="0" cy="-50" rx="20" ry="18" />
+        <line x1="0" y1="1" x2="0" y2="-34" />
+      </g>
+
+      <!-- Shelf 5: two filled plants -->
+      <g transform="translate(65,578)">
+        <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+        <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+        <ellipse cx="0" cy="-42" rx="20" ry="26" fill="#3d8028" />
+        <ellipse cx="-12" cy="-28" rx="12" ry="18" fill="#5aaa38" opacity="0.85" />
+        <ellipse cx="12" cy="-28" rx="12" ry="18" fill="#5aaa38" opacity="0.85" />
+      </g>
+      <g transform="translate(160,578)">
+        <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+        <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+        <rect x="-8" y="-62" width="16" height="50" rx="8" fill="#4a8a20" />
+        <rect x="-19" y="-50" width="13" height="22" rx="6" fill="#5a9a28" />
+        <rect x="6" y="-46" width="13" height="18" rx="6" fill="#5a9a28" />
+      </g>
+    </svg>
+
+    <!-- JHULA SWING — centred, no bird, shifted down -->
+    <div class="cy-jhula" id="cyJhula">
+      <img src="images/swing.png" alt="Jhula" style="width: 360px; height: auto;">
+    </div>
+
+    <!-- SNAP SILHOUETTES are now handled by IDs on the SVG groups inside the shelves -->
+
+    <!-- 5 DRAGGABLE PLANTS — bottom centre -->
+    <div class="cy-plant" id="plant-tulsi" data-target="sil-tulsi" data-word="0"
+      style="left:calc(50% - 230px); bottom:40px;">
+      <svg width="72" height="100" viewBox="-36 -85 72 100">
+        <path d="M-22 14 Q-26-2 -22-18 Q-16-32 0-34 Q16-32 22-18 Q26-2 22 14Z" fill="#c1440e" />
+        <ellipse cx="0" cy="-34" rx="20" ry="5" fill="#d4653a" />
+        <line x1="0" y1="-33" x2="0" y2="-60" stroke="#2a5010" stroke-width="2.5" />
+        <path d="M0-45 Q-16-43 -18-57 Q-8-52 0-45Z" fill="#3d8020" />
+        <path d="M0-45 Q16-43 18-57 Q8-52 0-45Z" fill="#3d8020" />
+        <path d="M0-57 Q-14-55 -14-69 Q-6-62 0-57Z" fill="#4a9a28" />
+        <path d="M0-57 Q14-55 14-69 Q6-62 0-57Z" fill="#4a9a28" />
+        <path d="M0-68 Q-8-68 -6-80 Q0-74 0-68Z" fill="#5aaa38" />
+        <path d="M0-68 Q8-68 6-80 Q0-74 0-68Z" fill="#5aaa38" />
+        <circle cx="-2" cy="-83" r="2.5" fill="#8a3aaa" />
+        <circle cx="3" cy="-85" r="2" fill="#9a4aba" />
+      </svg>
+      <div
+        style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+        tulsi</div>
+    </div>
+    <div class="cy-plant" id="plant-pudina" data-target="sil-pudina" data-word="1"
+      style="left:calc(50% - 120px); bottom:40px;">
+      <svg width="68" height="95" viewBox="-34 -80 68 95">
+        <path d="M-20 14 Q-24-2 -20-18 Q-14-32 0-34 Q14-32 20-18 Q24-2 20 14Z" fill="#b84020" />
+        <ellipse cx="0" cy="-34" rx="17" ry="4" fill="#d0603a" />
+        <line x1="0" y1="-33" x2="0" y2="-52" stroke="#2a5010" stroke-width="2" />
+        <line x1="0" y1="-42" x2="-14" y2="-55" stroke="#2a5010" stroke-width="1.5" />
+        <line x1="0" y1="-42" x2="14" y2="-55" stroke="#2a5010" stroke-width="1.5" />
+        <path d="M-14-55 Q-24-51 -22-63 Q-14-59 -14-55Z" fill="#4a9a28" />
+        <path d="M-14-55 Q-22-61 -18-73 Q-12-67 -14-55Z" fill="#3d8020" />
+        <path d="M14-55 Q24-51 22-63 Q14-59 14-55Z" fill="#4a9a28" />
+        <path d="M14-55 Q22-61 18-73 Q12-67 14-55Z" fill="#3d8020" />
+        <path d="M0-52 Q-8-54 -6-66 Q0-60 0-52Z" fill="#5aaa38" />
+        <path d="M0-52 Q8-54 6-66 Q0-60 0-52Z" fill="#5aaa38" />
+      </svg>
+      <div
+        style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+        pudina</div>
+    </div>
+    <div class="cy-plant" id="plant-neem" data-target="sil-neem" data-word="2"
+      style="left:calc(50% - 10px); bottom:40px;">
+      <svg width="72" height="105" viewBox="-36 -90 72 105">
+        <path d="M-20 14 Q-22 0 -18-14 Q-12-28 0-30 Q12-28 18-14 Q22 0 20 14Z" fill="#c1440e" />
+        <ellipse cx="0" cy="-30" rx="16" ry="4" fill="#d4653a" />
+        <line x1="0" y1="-29" x2="0" y2="-62" stroke="#3a5010" stroke-width="2.5" />
+        <path d="M0-42 Q-20-44 -24-58" stroke="#2a5010" stroke-width="1.5" fill="none" />
+        <path d="M0-42 Q20-44 24-58" stroke="#2a5010" stroke-width="1.5" fill="none" />
+        <path d="M-24-58 Q-34-54 -30-68 Q-24-64 -24-58Z" fill="#3d8020" />
+        <path d="M24-58 Q34-54 30-68 Q24-64 24-58Z" fill="#3d8020" />
+        <path d="M0-54 Q-12-58 -14-74" stroke="#2a5010" stroke-width="1.2" fill="none" />
+        <path d="M0-54 Q12-58 14-74" stroke="#2a5010" stroke-width="1.2" fill="none" />
+        <path d="M-14-74 Q-20-70 -18-82 Q-12-78 -14-74Z" fill="#4a9a28" />
+        <path d="M14-74 Q20-70 18-82 Q12-78 14-74Z" fill="#4a9a28" />
+        <path d="M0-72 Q-6-70 -4-82 Q2-78 0-72Z" fill="#5aaa38" />
+      </svg>
+      <div
+        style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+        neem</div>
+    </div>
+    <div class="cy-plant" id="plant-ajwain" data-target="sil-ajwain" data-word="3"
+      style="left:calc(50% + 100px); bottom:40px;">
+      <svg width="66" height="90" viewBox="-33 -75 66 90">
+        <path d="M-18 14 Q-22 0 -18-14 Q-12-28 0-30 Q12-28 18-14 Q22 0 18 14Z" fill="#b84020" />
+        <ellipse cx="0" cy="-30" rx="16" ry="4" fill="#d0603a" />
+        <line x1="0" y1="-29" x2="0" y2="-48" stroke="#2a5010" stroke-width="2" />
+        <line x1="0" y1="-40" x2="-10" y2="-52" stroke="#2a5010" stroke-width="1.3" />
+        <line x1="0" y1="-40" x2="10" y2="-52" stroke="#2a5010" stroke-width="1.3" />
+        <line x1="0" y1="-40" x2="0" y2="-55" stroke="#2a5010" stroke-width="1.3" />
+        <path d="M-10-52 Q-18-48 -16-60 Q-10-56 -10-52Z" fill="#5aaa38" />
+        <path d="M10-52 Q18-48 16-60 Q10-56 10-52Z" fill="#5aaa38" />
+        <path d="M0-55 Q-6-52 -4-64 Q2-60 0-55Z" fill="#4a9a28" />
+      </svg>
+      <div
+        style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+        ajwain</div>
+    </div>
+    <div class="cy-plant" id="plant-giloy" data-target="sil-giloy" data-word="4"
+      style="left:calc(50% + 210px); bottom:40px;">
+      <svg width="64" height="85" viewBox="-32 -70 64 85">
+        <path d="M-16 14 Q-20 0 -16-14 Q-10-28 0-30 Q10-28 16-14 Q20 0 16 14Z" fill="#c1440e" />
+        <ellipse cx="0" cy="-30" rx="14" ry="4" fill="#d4653a" />
+        <path d="M0-30 Q-15-45 -5-65" stroke="#2a5010" stroke-width="1.5" fill="none" />
+        <path d="M0-30 Q15-45 5-65" stroke="#2a5010" stroke-width="1.5" fill="none" />
+        <path d="M-5-65 Q-15-75 -5-85 Q5-75 -5-65Z" fill="#3d8020" />
+        <path d="M5-65 Q15-75 5-85 Q-5-75 5-65Z" fill="#3d8020" />
+      </svg>
+      <div
+        style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+        giloy</div>
+    </div>
+
+    <div class="cy-hero">
+      <span class="cy-hero-line" id="heroWord0">The courtyard remembers...</span>
+      <span class="cy-hero-sub" id="heroSub">Everything we are, began in a home that breathed.</span>
+    </div>
+
+    <div class="cy-drag-hint" id="cyDragHint">Put the plants back where they belong...</div>
+    <div class="cy-scroll-cue" id="cyScrollCue">
+      <span>Scroll to explore</span>
+      <span class="cy-scroll-leaf">🌿</span>
+    </div>
+  </section>
+
+  <!-- SECTION 2: GENERATION SELECTOR -->
+  <section id="generation-section" class="flex flex-col items-center justify-start pt-[36px] pb-[36px] px-8">
+    <header class="text-center mb-6 relative z-10">
+      <h1 class="font-serif text-5xl text-sepia-dark italic">Which generation do you belong to?</h1>
+      <p class="font-serif text-lg text-sepia-mid max-w-4xl mx-auto mt-4 opacity-70 leading-relaxed">
+        Before the pharmacy arrived on every street corner, there was the kitchen. Before the kitchen emptied, there
+        was someone who knew. This is a story about the distance between what she knew and what reached you.
+      </p>
+      <div id="result-display" class="mt-6 text-center min-h-[1.5rem]"></div>
+    </header>
+    <div class="relative w-full max-w-5xl mx-auto">
+      <img src="images/flower_bale.png" class="flower-bale-border flower-top-left" alt="">
+      <img src="images/flower_bale.png" class="flower-bale-border flower-bottom-right" alt="">
+      <div
+        class="table-surface p-12 flex flex-wrap justify-center gap-16 relative overflow-hidden min-h-[450px] items-end pb-12">
+        <div onclick="selectGeneration('kadak', 0)" id="gen-kadak" class="item-card group flex flex-col items-center">
+          <img src="images/kadakchaiimg.png" class="h-60 w-auto object-contain" alt="Kadak Chai">
+          <div class="mt-6 text-center">
+            <h3 class="font-serif text-2xl italic text-sepia-dark">Kadak Chai</h3>
+            <div class="ink-reveal mt-2 mx-auto"></div>
+          </div>
+        </div>
+        <div onclick="selectGeneration('green', 3)" id="gen-green" class="item-card group flex flex-col items-center">
+          <img src="images/greenteaimg.png" class="h-60 w-auto object-contain" alt="Green Tea">
+          <div class="mt-6 text-center">
+            <h3 class="font-serif text-2xl italic text-sepia-dark">Green Tea</h3>
+            <div class="ink-reveal mt-2 mx-auto"></div>
+          </div>
+        </div>
+        <div onclick="selectGeneration('coke', 7)" id="gen-coke" class="item-card group flex flex-col items-center">
+          <img src="images/dietcokeimg.png" class="h-60 w-auto object-contain" alt="Diet Coke">
+          <div class="mt-6 text-center">
+            <h3 class="font-serif text-2xl italic text-sepia-dark">Diet Coke</h3>
+            <div class="ink-reveal mt-2 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 3D MAP -->
+  <section id="map-section" class="flex flex-col items-center justify-start pt-[36px] pb-[36px] px-8">
+    <header class="text-center mb-10 relative z-10 w-full px-16">
+      <h1 class="font-serif text-5xl text-sepia-dark italic">The Map of Memory</h1>
+      <p class="font-serif text-lg text-sepia-mid max-w-4xl mx-auto mt-4 opacity-70 leading-relaxed">
+        We asked 20 people — from the same families across three generations — which of these 7 remedies they knew,
+        used, and would make today. The size shows how many remedies they actively use — not just recognise, not just
+        remember hearing about, but would actually make at home if someone fell sick tonight.
+      </p>
+    </header>
+    <div id="treemap-container" class="isometric-view w-[800px] h-[480px] relative"></div>
+  </section>
+
+  <!-- SECTION 4: BUBBLE PLOT -->
+  <section id="bubble-section" class="flex flex-col pt-[36px] pb-[36px] px-8">
+    <header class="text-center mb-10 relative z-10 w-full px-16">
+      <h1 class="font-serif text-5xl text-sepia-dark italic">Across The Generations: <span class="text-sepia-mid">What
+          We Lost</span></h1>
+      <p class="font-serif text-lg text-sepia-mid max-w-4xl mx-auto mt-4 opacity-70 leading-relaxed">
+        It happened meal by meal. Generation by generation. No announcement. No decision. Just one morning when
+        nobody boiled the kadha and nobody noticed it was the last time.
+      </p>
+    </header>
+    <main class="flex-none flex flex-col px-12 max-w-7xl mx-auto w-full pb-10 h-[500px]">
+      <div class="pattern-border"></div>
+      <div class="era-row" id="grandma-era">
+        <div class="era-label">Grandma’s Era</div>
+        <div id="bubbles-g" class="flex-1 relative flex items-center justify-around pr-12">
+          <div class="event-marker left-[5%]" title="1947: Traditional primary healthcare."></div>
+        </div>
+      </div>
+      <div class="pattern-border"></div>
+      <div class="era-row" id="parent-era">
+        <div class="era-label">Parent’s Era</div>
+        <div id="bubbles-p" class="flex-1 relative flex items-center justify-around pr-12">
+          <div class="event-marker left-[25%]" title="1970: Patent Act growth."></div>
+        </div>
+      </div>
+      <div class="pattern-border"></div>
+      <div class="era-row" id="our-era">
+        <div class="era-label">Our Era</div>
+        <div id="bubbles-o" class="flex-1 relative flex items-center justify-around pr-12">
+          <div class="event-marker left-[15%]" title="2010s: Digital boom."></div>
+        </div>
+      </div>
+      <div class="pattern-border"></div>
+    </main>
+  </section>
+
+  <!-- SECTION 5: CARD YARD -->
+  <section id="yard-section" class="flex flex-col items-center justify-start pt-[36px] pb-[36px] px-8 overflow-hidden relative">
+    <!-- Decorative images -->
+    <img src="images/shilf_card_1.png" class="absolute pointer-events-none opacity-40 grayscale-[0.3]"
+      style="width:220px; top:5%; right:5%; transform:rotate(15deg); z-index:0;" alt="">
+    <img src="images/shilf_card_2.png" class="absolute pointer-events-none opacity-40 grayscale-[0.3]"
+      style="width:260px; bottom:-60px; left:15%; transform:rotate(-20deg); opacity:0.5; z-index:0;" alt="">
+
+    <header class="text-center mb-24 relative z-10 w-full px-16">
+      <h1 class="font-serif text-5xl italic text-mystic-blue">Choose Your Remedy</h1>
+      <p class="font-serif text-lg text-mystic-blue/60 max-w-4xl mx-auto mt-4 leading-relaxed">
+        Not in any book. Not in any app. In the way she said it while she was making something else. These are the ones
+        that survived — passed from hand to hand, kitchen to kitchen, without ever being written down.
+      </p>
+    </header>
+    <div id="card-arena"
+      class="relative w-full max-w-5xl h-[600px] flex items-center justify-center perspective-1000 mt-20 mb-12">
+    </div>
+    <footer class="mt-4 z-20">
+      <button onclick="shuffleCards()"
+        class="px-12 py-4 bg-mystic-blue/5 border border-mystic-blue/10 text-mystic-blue font-serif italic text-2xl rounded-full hover:bg-mystic-blue hover:text-white transition-all">Shuffle
+        the Yard</button>
+    </footer>
+  </section>
+
+  <!-- SECTION 6: HERITAGE FRAME -->
+  <section id="heritage-section">
+    <img src="images/hanging_plant-removebg-preview.png" class="hanging-plant-dec hp-left" alt="">
+    <img src="images/hanging_plant-removebg-preview.png" class="hanging-plant-dec hp-right" alt="">
+
+    <div class="max-w-lg w-full text-center px-8 z-20">
+      <div id="heritage-input">
+        <h1 class="font-serif text-5xl italic text-sepia-dark mb-2">A Final Promise</h1>
+        <p class="font-serif text-lg text-sepia-mid mb-10 opacity-80">don’t let the heritage fade into medicine.</p>
+
+        <div class="sketch-input-group">
+          <label class="sketch-label">the name of the remedy</label>
+          <input type="text" id="recipeName" class="sketch-input" placeholder="e.g. Tulsi Kadha">
+        </div>
+
+        <div class="sketch-input-group">
+          <label class="sketch-label">the voice that taught you</label>
+          <input type="text" id="recipeWho" class="sketch-input" placeholder="e.g. my grandmother's">
+        </div>
+
+        <div class="sketch-input-group">
+          <label class="sketch-label">the secret of its making</label>
+          <textarea id="recipeHow" class="sketch-textarea" placeholder="stir slowly, with intention..."></textarea>
+        </div>
+
+        <button class="btn-preserve" onclick="submitRecipe()">Keep it Safe</button>
+      </div>
+
+      <div id="heritage-success">
+        <h2 class="font-serif text-5xl italic mb-6">Thank You.</h2>
+        <p class="font-serif text-lg text-sepia-mid opacity-70">
+          Your memory is now woven into the Yard.<br>
+          It will never be forgotten.
+        </p>
+        <div class="mt-12 opacity-30 italic text-sm">scroll back to return to the yard</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal" onclick="closeModal()">
+    <div class="modal-content relative" onclick="event.stopPropagation()">
+      <button onclick="closeModal()"
+        class="absolute top-8 right-10 text-4xl text-sepia-dark opacity-30 hover:opacity-100">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip"></div>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+
+    /* ── CURSOR & TRAIL ── */
+    const cyCursor = document.getElementById('cy-cursor');
+    const leafCols = ['#2d5a1a', '#4a8a2a', '#6aaa40', '#3d7020', '#5a9a30', '#8fbc5a'];
+    const flowerCols = ['#c1440e', '#d4847a', '#c9a060', '#e8875a', '#b84020', '#d4a030'];
+    const petalDefs = [
+      { rx: 0.42, ry: 1.02, off: 0.96 },
+      { rx: 0.38, ry: 0.92, off: 0.88 },
+      { rx: 0.44, ry: 1.06, off: 0.99 },
+      { rx: 0.40, ry: 0.96, off: 0.91 },
+      { rx: 0.36, ry: 0.90, off: 0.87 },
+      { rx: 0.43, ry: 0.98, off: 0.94 },
+    ];
+
+    let lastMX = -100, lastMY = -100, currentMX = -100, currentMY = -100;
+    let frameCount = 0;
+    let particles = [];
+
+    function drawOrganicFlower(x, y, s, rot, col, alpha) {
+      bCtx.save();
+      bCtx.globalAlpha = alpha;
+      bCtx.translate(x, y);
+      bCtx.rotate(rot);
+      petalDefs.forEach((p, i) => {
+        bCtx.save();
+        bCtx.rotate((i * 60) * Math.PI / 180);
+        bCtx.fillStyle = col;
+        bCtx.beginPath();
+        bCtx.ellipse(0, -p.off * s, p.rx * s, p.ry * s, 0, 0, Math.PI * 2);
+        bCtx.fill();
+        bCtx.restore();
+      });
+      bCtx.fillStyle = '#f5d060';
+      bCtx.beginPath();
+      bCtx.arc(0, 0, s * 0.52, 0, Math.PI * 2);
+      bCtx.fill();
+      bCtx.fillStyle = '#e8a020';
+      bCtx.beginPath();
+      bCtx.arc(s * 0.09, -s * 0.07, s * 0.30, 0, Math.PI * 2);
+      bCtx.fill();
+      bCtx.restore();
+    }
+
+    function drawLeaf(x, y, s, rot, col, alpha) {
+      bCtx.save();
+      bCtx.globalAlpha = alpha;
+      bCtx.translate(x, y);
+      bCtx.rotate(rot);
+      bCtx.fillStyle = col;
+      bCtx.beginPath();
+      bCtx.moveTo(0, -s);
+      bCtx.quadraticCurveTo(s * 0.55, -s * 0.28, 0, s * 0.55);
+      bCtx.quadraticCurveTo(-s * 0.55, -s * 0.28, 0, -s);
+      bCtx.fill();
+      bCtx.restore();
+    }
+
+    function spawnTrail() {
+      const dx = currentMX - lastMX, dy = currentMY - lastMY;
+      if (Math.sqrt(dx * dx + dy * dy) < 7) return;
+      const isFlower = Math.random() < 0.22;
+      const col = isFlower
+        ? flowerCols[Math.floor(Math.random() * flowerCols.length)]
+        : leafCols[Math.floor(Math.random() * leafCols.length)];
+      const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.1 + Math.PI;
+      const spd = 0.2 + Math.random() * 0.45;
+      particles.push({
+        x: currentMX + (Math.random() - 0.5) * 5,
+        y: currentMY + (Math.random() - 0.5) * 5,
+        vx: Math.cos(angle) * spd,
+        vy: Math.sin(angle) * spd - 0.22,
+        alpha: 0.5 + Math.random() * 0.3,
+        rot: Math.random() * Math.PI * 2,
+        rotV: (Math.random() - 0.5) * 0.06,
+        size: isFlower ? (2 + Math.random() * 2.2) : (2.2 + Math.random() * 3.2),
+        col, isFlower,
+        gravity: 0.015,
+        fade: 0.013 + Math.random() * 0.009,
+        isTrail: true
+      });
+      lastMX = currentMX; lastMY = currentMY;
+    }
+
+    function createBurst(x, y) {
+      const colors = ['#2d5a1a', '#4a8a2a', '#6aaa40', '#8fbc5a', '#3d7a28', '#1a4010'];
+      for (let i = 0; i < 22; i++) {
+        const angle = (Math.PI * 2 / 22) * i + (Math.random() - 0.5) * 0.5;
+        const speed = 2 + Math.random() * 5;
+        particles.push({
+          x: x, y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2,
+          size: 5 + Math.random() * 8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.2,
+          isTrail: false
+        });
+      }
+    }
+
+    let burstAnimating = false;
+    function animateBurst() {
+      if (particles.length === 0) { burstAnimating = false; return; }
+      burstAnimating = true;
+      bCtx.clearRect(0, 0, burstCanvas.width, burstCanvas.height);
+
+      frameCount++;
+      if (frameCount % 2 === 0) spawnTrail();
+
+      particles = particles.filter(p => p.alpha > 0.01);
+      particles.forEach(p => {
+        if (p.isTrail) {
+          if (p.isFlower) drawOrganicFlower(p.x, p.y, p.size, p.rot, p.col, p.alpha);
+          else drawLeaf(p.x, p.y, p.size, p.rot, p.col, p.alpha);
+          p.x += p.vx; p.y += p.vy;
+          p.vy += p.gravity; p.vx *= 0.97;
+          p.rot += p.rotV; p.alpha -= p.fade;
+        } else {
+          bCtx.save();
+          bCtx.translate(p.x, p.y);
+          bCtx.rotate(p.rotation);
+          bCtx.globalAlpha = p.alpha;
+          bCtx.fillStyle = p.color;
+          bCtx.beginPath();
+          bCtx.moveTo(0, -p.size);
+          bCtx.quadraticCurveTo(p.size * 0.6, -p.size * 0.3, 0, p.size * 0.8);
+          bCtx.quadraticCurveTo(-p.size * 0.6, -p.size * 0.3, 0, -p.size);
+          bCtx.fill();
+          bCtx.restore();
+          p.x += p.vx; p.y += p.vy;
+          p.vy += 0.15; p.vx *= 0.98;
+          p.rotation += (p.rotSpeed || 0);
+          p.alpha -= 0.022;
+        }
+      });
+      requestAnimationFrame(animateBurst);
+    }
+
+    const burstCanvas = document.getElementById('leafBurstCanvas');
+    const bCtx = burstCanvas.getContext('2d');
+    burstCanvas.width = window.innerWidth;
+    burstCanvas.height = window.innerHeight;
+    window.addEventListener('resize', () => {
+      burstCanvas.width = window.innerWidth;
+      burstCanvas.height = window.innerHeight;
+    });
+
+    // Start trail loop
+    if (!burstAnimating) animateBurst();
+
+    document.addEventListener('mousemove', e => {
+      currentMX = e.clientX;
+      currentMY = e.clientY;
+      cyCursor.style.left = currentMX + 'px';
+      cyCursor.style.top = currentMY + 'px';
+    });
+
+    /* ── DRAG & SNAP ── */
+    const SNAP_RADIUS = 100;
+    let snappedCount = 0;
+    const totalPlants = 5;
+    const heroWord = document.getElementById('heroWord0');
+    const heroSub = document.getElementById('heroSub');
+    const dragHint = document.getElementById('cyDragHint');
+    const scrollCue = document.getElementById('cyScrollCue');
+
+    function getElCentre(el) {
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    function makeDraggable(plant) {
+      let dragging = false;
+      let startMX, startMY, startLeft, startBottom;
+      let snapped = false;
+
+      plant.addEventListener('mousedown', e => {
+        if (snapped) return;
+        dragging = true;
+        plant.classList.add('dragging');
+        const rect = plant.getBoundingClientRect();
+        startLeft = rect.left;
+        startBottom = window.innerHeight - rect.bottom;
+        startMX = e.clientX; startMY = e.clientY;
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        const dx = e.clientX - startMX;
+        const dy = e.clientY - startMY;
+        plant.style.left = (startLeft + dx) + 'px';
+        plant.style.bottom = (startBottom - dy) + 'px';
+        plant.style.transform = 'none';
+
+        const plantC = getElCentre(plant);
+        let closestSil = null;
+        let minDist = Infinity;
+
+        document.querySelectorAll('[id^="svg-target-"]').forEach(sil => {
+          if (sil.dataset.filled) return;
+          const silC = getElCentre(sil);
+          const d = Math.hypot(plantC.x - silC.x, plantC.y - silC.y);
+          if (d < SNAP_RADIUS * 1.5 && d < minDist) {
+            minDist = d;
+            closestSil = sil;
+          }
+        });
+
+        document.querySelectorAll('[id^="svg-target-"]').forEach(s => {
+          if (s === closestSil) {
+            s.style.opacity = '0.55';
+            s.style.filter = 'brightness(0.5) sepia(1) saturate(5) hue-rotate(60deg)';
+          } else {
+            if (!s.dataset.filled) {
+               s.style.opacity = ''; s.style.filter = '';
+            }
+          }
+        });
+      });
+
+      document.addEventListener('mouseup', e => {
+        if (!dragging) return;
+        dragging = false;
+        plant.classList.remove('dragging');
+
+        const plantC = getElCentre(plant);
+        let closestSil = null;
+        let minDist = Infinity;
+
+        document.querySelectorAll('[id^="svg-target-"]').forEach(sil => {
+          if (sil.dataset.filled) return;
+          const silC = getElCentre(sil);
+          const d = Math.hypot(plantC.x - silC.x, plantC.y - silC.y);
+          if (d < SNAP_RADIUS && d < minDist) {
+            minDist = d;
+            closestSil = sil;
+          }
+        });
+
+        if (closestSil) {
+          snapped = true; snappedCount++;
+          plant.classList.add('snapped');
+          const silRect = closestSil.getBoundingClientRect();
+          const parentRect = plant.parentElement.getBoundingClientRect();
+          
+          plant.style.left = (silRect.left - parentRect.left + silRect.width / 2) + 'px';
+          plant.style.bottom = (parentRect.bottom - silRect.bottom) + 'px';
+          plant.style.transform = 'translateX(-50%)';
+          
+          closestSil.dataset.filled = "true";
+          closestSil.style.opacity = '0';
+          closestSil.style.filter = 'none';
+          closestSil.style.transition = 'none';
+          
+          const silC = getElCentre(closestSil);
+          createBurst(silC.x, silC.y);
+          if (!burstAnimating) animateBurst();
+        } else {
+          document.querySelectorAll('[id^="svg-target-"]').forEach(s => {
+             if (!s.dataset.filled) { s.style.opacity = ''; s.style.filter = ''; }
+          });
+        }
+      });
+    }
+    document.querySelectorAll('.cy-plant').forEach(makeDraggable);
+
+    const REMEDIES = [
+      { name: "Haldi Doodh", value: 20, color: "#d4a017", artifact: "Golden Elixir", description: "The legendary turmeric latte, infused with warmth.", prep: "Whisk organic turmeric and a pinch of black pepper into warm milk. Simmer until golden.", benefits: "Anti-inflammatory, boosts immunity, and induces deep sleep.", img: "images/kadakchaiimg.png" },
+      { name: "Tulsi Kadha", value: 18, color: "#4a5d4a", artifact: "Emerald Immunity", description: "Potent brew of holy basil and ginger.", prep: "Boil fresh Tulsi leaves with ginger and black pepper until the water reduces by half.", benefits: "Clears congestion and strengthens respiratory health.", img: "images/kadakchaiimg.png" },
+      { name: "Hing Ghee", value: 15, color: "#e3a857", artifact: "Earthly Comfort", description: "Warming asafoetida in pure clarified butter.", prep: "Temper a pinch of Hing in warm Ghee and massage onto the abdomen or consume.", benefits: "Instant relief from bloating and digestive distress.", img: "images/kadakchaiimg.png" },
+      { name: "Adrak Shahad", value: 12, color: "#b5651d", artifact: "Amber Relief", description: "Sharp blend of ginger and raw honey.", prep: "Mix freshly squeezed ginger juice with raw honey. Consume slowly.", benefits: "Soothes a sore throat and calms seasonal coughs.", img: "images/kadakchaiimg.png" },
+      { name: "Neem Paste", value: 12, color: "#1a2e1a", artifact: "Sacred Bitter", description: "Cooling, purifying touch of ground neem.", prep: "Grind fresh neem leaves with a little water into a fine, cooling paste.", benefits: "Purifies skin and treats infections naturally.", img: "images/kadakchaiimg.png" },
+      { name: "Ajwain + Salt", value: 12, color: "#a68a64", artifact: "Carom Shield", description: "Salted carom seeds for digestive lightness.", prep: "Dry roast Ajwain seeds with a pinch of rock salt and consume with warm water.", benefits: "Relieves acidity and heavy stomach after meals.", img: "images/kadakchaiimg.png" },
+      { name: "Aloe Vera Gel", value: 12, color: "#4e6e4e", artifact: "Verdant Calm", description: "Soothing soul of the desert lily.", prep: "Extract fresh gel from a mature leaf and apply directly or blend into juice.", benefits: "Heals burns, hydrates skin, and detoxifies the system.", img: "images/kadakchaiimg.png" },
+      { name: "Neem Kwath", value: 10, color: "#2d4a2d", artifact: "Bitter Purge", description: "A deep decoction for purifying the blood.", prep: "Boil bark or old leaves in water until the liquid turns a dark, bitter green.", benefits: "Powerful blood cleanser and internal detoxifier.", img: "images/kadakchaiimg.png" },
+      { name: "Kali Mirch + Honey", value: 10, color: "#3d2a1a", artifact: "Night Guard", description: "Pungent black pepper and honey.", prep: "Crush black peppercorns and mix with honey. Take before bedtime.", benefits: "Quietens a dry cough and warms the throat.", img: "images/kadakchaiimg.png" },
+      { name: "Jeera Water", value: 9, color: "#6b4226", artifact: "Cumin Infusion", description: "Earthly cumin seeds steeped for harmony.", prep: "Soak Jeera overnight or boil in water until the seeds release their golden oils.", benefits: "Boosts metabolism and aids healthy digestion.", img: "images/kadakchaiimg.png" }
+    ];
+
+    function selectGeneration(type, lostCount) {
+      document.querySelectorAll('.item-card').forEach(el => el.classList.remove('selected'));
+      document.getElementById(`gen-${type}`).classList.add('selected');
+      document.getElementById('result-display').innerHTML = `<p class="font-serif text-xl text-sepia-dark italic">Alas! You have lost <span class="text-terracotta font-bold">${lostCount}</span> remedies out of 9.</p>`;
+    }
+
+    function darken(col, amt) {
+      let num = parseInt(col.slice(1), 16), r = Math.max(0, (num >> 16) + amt), g = Math.max(0, ((num >> 8) & 0x00FF) + amt), b = Math.max(0, (num & 0x0000FF) + amt);
+      return "#" + (b | (g << 8) | (r << 16)).toString(16).padStart(6, '0');
+    }
+
+    function getContrastColor(hex) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness > 140 ? '#2d1a08' : '#fffdfa';
+    }
+
+    function init3DMap() {
+      const container = document.getElementById('treemap-container');
+      const root = d3.hierarchy({ children: REMEDIES }).sum(d => d.value).sort((a, b) => b.value - a.value);
+      d3.treemap().size([800, 480]).paddingInner(8)(root);
+      root.leaves().forEach(d => {
+        const w = d.x1 - d.x0, h = d.y1 - d.y0, depth = d.data.value * 8;
+        const block = document.createElement('div');
+        block.className = 'remedy-block absolute';
+        const txtCol = getContrastColor(d.data.color);
+        block.style.cssText = `left:${d.x0}px; top:${d.y0}px; width:${w}px; height:${h}px; --block-height:${depth}px; --block-width:${w}px; --block-color:${d.data.color}; --block-color-dark:${darken(d.data.color, -40)}; --block-color-darker:${darken(d.data.color, -60)};`;
+        block.innerHTML = `<div class="face face-top w-full h-full" style="color:${txtCol};"><span class="font-serif text-xs leading-tight font-bold">${w > 45 ? d.data.name : ''}</span></div><div class="face face-front w-full"></div><div class="face face-right h-full"></div>`;
+        block.onmouseenter = (e) => showTooltip(e, `<strong>${d.data.name}</strong><br/>${d.data.value}/20 followers`);
+        block.onmouseleave = hideTooltip;
+        container.appendChild(block);
+      });
+    }
+
+    function initBubbles() {
+      const top7 = REMEDIES.slice(0, 7);
+      const eras = [{ id: 'bubbles-g', m: 1.0, j: true }, { id: 'bubbles-p', m: 0.6, j: false }, { id: 'bubbles-o', m: 0.2, j: true }];
+      eras.forEach(era => {
+        const cont = document.getElementById(era.id);
+        top7.forEach((rem, i) => {
+          const b = document.createElement('div');
+          const s = Math.max(10, rem.value * 4 * era.m);
+          b.className = `bubble absolute transition-all duration-700`;
+          b.style.width = s + 'px'; b.style.height = s + 'px'; b.style.backgroundColor = rem.color;
+          b.style.left = (15 + i * 12) + '%';
+          if (era.j) b.style.transform = `translateY(${i % 2 === 0 ? -15 : 15}px)`;
+          b.onmouseenter = (e) => {
+            showTooltip(e, `<strong>${rem.name}</strong><br/>Knowledge: ${Math.round(era.m * 100)}%`);
+            if (era.m < 0.5) {
+              cyCursor.classList.add('wilting');
+              setTimeout(() => cyCursor.classList.remove('wilting'), 800);
+            }
+          };
+          b.onmouseleave = hideTooltip;
+          cont.appendChild(b);
+        });
+      });
+    }
+
+    let currentDeck = [...REMEDIES];
+    function initCards(animate = false) {
+      const arena = document.getElementById('card-arena');
+      arena.innerHTML = '';
+      currentDeck.forEach((rem, index) => {
+        const total = currentDeck.length;
+        const angleStep = 140 / (total - 1);
+        const startAngle = -70;
+        const angle = startAngle + (index * angleStep);
+        const radius = 380;
+        const x = Math.sin((angle * Math.PI) / 180) * radius;
+        const y = -Math.cos((angle * Math.PI) / 180) * radius + radius - 50;
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card stitch-card-pattern';
+        const baseTransform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+        cardEl.style.setProperty('--base-transform', baseTransform);
+        if (animate) {
+          cardEl.style.opacity = '0';
+          cardEl.style.transform = `translate(0, 0) rotate(0deg) scale(0)`;
+        } else {
+          cardEl.style.transform = baseTransform;
+        }
+        cardEl.onclick = () => showCard(rem);
+        arena.appendChild(cardEl);
+        if (animate) {
+          setTimeout(() => {
+            cardEl.style.opacity = '1';
+            cardEl.style.transform = baseTransform;
+          }, index * 40);
+        }
+      });
+    }
+
+    function shuffleCards() {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(c => {
+        c.style.transform = `translate(0, 0) rotate(0deg) scale(0.95)`;
+        c.style.zIndex = '10';
+      });
+      setTimeout(() => {
+        currentDeck = currentDeck.sort(() => Math.random() - 0.5);
+        initCards(true);
+      }, 800);
+    }
+
+    function showCard(rem) {
+      const modal = document.getElementById('modal');
+      document.getElementById('modal-body').innerHTML = `
+                <div class="modal-illustration">
+                    <img src="${rem.img}" alt="${rem.name}">
+                    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');"></div>
+                </div>
+                <div class="modal-details">
+                    <span class="modal-tag">${rem.artifact}</span>
+                    <h2 class="modal-title">${rem.name}</h2>
+                    
+                    <div class="modal-detail-section">
+                        <h3 class="modal-label">The Preparation</h3>
+                        <p class="modal-text">${rem.prep}</p>
+                    </div>
+
+                    <div class="modal-detail-section">
+                        <h3 class="modal-label">The Benefits</h3>
+                        <p class="modal-text">${rem.benefits}</p>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-dashed border-sepia-mid/20">
+                        <p class="font-kalam text-sm italic text-sepia-mid">"${rem.description}"</p>
+                    </div>
+                </div>
+            `;
+      modal.classList.add('active');
+    }
+
+    function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+    function submitRecipe() {
+      const name = document.getElementById('recipeName').value;
+      if (!name) return alert("Please share a name for the nuskha.");
+      document.getElementById('heritage-input').style.display = 'none';
+      document.getElementById('heritage-success').style.display = 'block';
+    }
+
+    function showTooltip(e, content) {
+      const t = document.getElementById('tooltip');
+      t.innerHTML = content; t.style.opacity = '1';
+      t.style.left = (e.clientX + 15) + 'px'; t.style.top = (e.clientY + 15) + 'px';
+    }
+    function hideTooltip() { document.getElementById('tooltip').style.opacity = '0'; }
+
+    // 3D TILT EFFECT for Treemap
+    const mapSection = document.getElementById('map-section');
+    const isometric = document.querySelector('.isometric-view');
+    if (mapSection && isometric) {
+      mapSection.addEventListener('mousemove', e => {
+        const rect = mapSection.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        // Subtle tilt added to the base isometric transform with scale
+        isometric.style.transform = `rotateX(${55 + y * 15}deg) rotateZ(${-45 + x * 20}deg) scale(0.9)`;
+      });
+      mapSection.addEventListener('mouseleave', () => {
+        isometric.style.transform = `rotateX(55deg) rotateZ(-45deg) scale(0.9)`;
+      });
+    }
+
+    window.onload = () => {
+      init3DMap(); initBubbles(); initCards(true);
+
+      // Reveal hero text and scroll cue immediately on load
+      heroWord.classList.add('word-revealed');
+      heroSub.classList.add('revealed');
+      scrollCue.classList.add('visible');
+
+      document.querySelectorAll('.event-marker').forEach(el => {
+        el.onmouseenter = (e) => showTooltip(e, el.title);
+        el.onmouseleave = hideTooltip;
+      });
+    };
+  </script>
+</body>
+
+</html>

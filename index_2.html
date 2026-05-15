@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuskhe — The Courtyard Knew</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Kalam:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <style>
+        /* ============ RESET & ROOT ============ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cream: #f5ede0;
+            --sepia-dark: #3b2a1a;
+            --sepia-mid: #7a5c3a;
+            --sepia-light: #c9a97a;
+            --green-deep: #2d4a2d;
+            --green-mid: #4a7c59;
+            --green-light: #8fbc8f;
+            --terracotta: #c1440e;
+            --terra-soft: #e8875a;
+            --blue-cold: #1a2a4a;
+            --blue-mid: #2e4a7a;
+            --gold: #d4a017;
+            --ghost: rgba(245, 237, 224, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--sepia-dark);
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* ============ CURSOR WILTING (extinct bubbles) ============ */
+        #cy-cursor.wilting svg {
+            animation: leafWilt 0.6s ease forwards;
+        }
+
+        @keyframes leafWilt {
+            0% {
+                transform: rotate(-10deg);
+            }
+
+            50% {
+                transform: rotate(30deg) scaleY(0.7);
+            }
+
+            100% {
+                transform: rotate(20deg) scaleY(0.5);
+                opacity: 0.5;
+            }
+        }
+
+        /* ============ SOUND TOGGLE ============ */
+        #soundToggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1000;
+            background: rgba(245, 237, 224, 0.85);
+            border: 1px solid var(--sepia-light);
+            color: var(--sepia-dark);
+            font-family: 'Kalam', cursive;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            cursor: none;
+            backdrop-filter: blur(6px);
+            transition: background 0.3s;
+        }
+
+        #soundToggle:hover {
+            background: rgba(245, 237, 224, 1);
+        }
+
+        /* ============ SCORE BADGE ============ */
+        #scoreBadge {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            z-index: 1000;
+            background: var(--sepia-dark);
+            color: var(--cream);
+            font-family: 'Kalam', cursive;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s, transform 0.6s;
+            line-height: 1.4;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        #scoreBadge.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================================
+       FRAME 1 — NUSKHE COURTYARD (Jhula + Shelves)
+    ============================================================ */
+        #frame-courtyard {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #f7f2e4;
+            cursor: none;
+        }
+
+        /* Tile border */
+        .cy-tile-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            background: #ddeaf5;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .cy-tile-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(58, 95, 160, 0.25);
+        }
+
+        /* Title block */
+        .cy-title-block {
+            position: absolute;
+            top: 88px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .cy-dadi-ke {
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.45em;
+            color: #5a3a10;
+            opacity: 0.65;
+            display: block;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .cy-nuskhe {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-style: italic;
+            color: #2d1a08;
+            display: block;
+            line-height: 1;
+        }
+
+        /* Shelves */
+        .cy-shelf {
+            position: absolute;
+            top: 68px;
+            bottom: 0;
+            width: 220px;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .cy-shelf-left {
+            left: 0;
+        }
+
+        .cy-shelf-right {
+            right: 0;
+        }
+
+        /* Jhula */
+        .cy-jhula {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 68px;
+            z-index: 12;
+            pointer-events: none;
+            animation: jhulaSway 5s ease-in-out infinite;
+            transform-origin: center top;
+        }
+
+        @keyframes jhulaSway {
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(2deg);
+            }
+        }
+
+        /* Snap silhouettes on shelves */
+        .cy-sil {
+            position: absolute;
+            opacity: 0.18;
+            pointer-events: none;
+            transition: opacity 0.4s, filter 0.4s;
+        }
+
+        .cy-sil.pulse {
+            animation: silPulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes silPulse {
+
+            0%,
+            100% {
+                opacity: 0.15;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+        }
+
+        .cy-sil.filled {
+            opacity: 0 !important;
+            animation: none;
+        }
+
+        /* Draggable plants */
+        .cy-plant {
+            position: absolute;
+            cursor: none;
+            user-select: none;
+            transition: filter 0.2s, transform 0.2s;
+            z-index: 30;
+            touch-action: none;
+        }
+
+        .cy-plant:hover {
+            filter: brightness(1.12) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+        }
+
+        .cy-plant.dragging {
+            z-index: 100;
+            filter: drop-shadow(0 0 16px rgba(100, 160, 60, 0.5));
+            transform: scale(1.07);
+        }
+
+        .cy-plant.snapped {
+            transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        /* Hero text reveal */
+        .cy-hero {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 40;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .cy-hero-line {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 3vw, 2.4rem);
+            font-style: italic;
+            color: rgba(45, 26, 8, 0);
+            display: block;
+            line-height: 1.3;
+            transition: color 0.9s ease, text-shadow 0.9s ease;
+        }
+
+        .cy-hero-line.word-revealed {
+            color: rgba(45, 26, 8, 0.88);
+            text-shadow: 0 2px 20px rgba(180, 120, 40, 0.2);
+        }
+
+        .cy-hero-sub {
+            font-family: 'Lora', serif;
+            font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+            color: rgba(90, 58, 16, 0);
+            font-style: italic;
+            margin-top: 1rem;
+            display: block;
+            transition: color 1.2s ease;
+        }
+
+        .cy-hero-sub.revealed {
+            color: rgba(90, 58, 16, 0.65);
+        }
+
+        .cy-drag-hint {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Kalam', cursive;
+            font-size: 0.85rem;
+            color: rgba(90, 58, 16, 0.45);
+            letter-spacing: 0.08em;
+            pointer-events: none;
+            z-index: 40;
+            text-align: center;
+            animation: hintPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .cy-drag-hint.hidden {
+            opacity: 0 !important;
+            animation: none;
+        }
+
+        .cy-scroll-cue {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: rgba(90, 58, 16, 0.5);
+            font-family: 'Kalam', cursive;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 1s ease;
+            animation: scrollCueBob 3s ease-in-out infinite;
+        }
+
+        .cy-scroll-cue.visible {
+            opacity: 1;
+        }
+
+        @keyframes scrollCueBob {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-6px);
+            }
+        }
+
+        .cy-scroll-leaf {
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        #leafBurstCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        #cy-cursor {
+            position: fixed;
+            width: 28px;
+            height: 36px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -100%);
+            transition: transform 0.05s linear;
+        }
+
+        #cy-cursor svg {
+            width: 100%;
+            height: 100%;
+            animation: cursorSway 4s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(45, 74, 45, 0.5));
+        }
+
+        @keyframes cursorSway {
+
+            0%,
+            100% {
+                transform: rotate(-8deg);
+            }
+
+            50% {
+                transform: rotate(8deg);
+            }
+        }
+
+        /* ============================================================
+       FRAME 1.5 — QUIZ (GENERATION SELECTOR)
+    ============================================================ */
+        #frame-quiz {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, #f5ede0 0%, #e8d5b8 100%);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #frame-quiz::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 80%, rgba(193, 68, 14, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45, 74, 45, 0.06) 0%, transparent 50%);
+        }
+
+        .quiz-eyebrow {
+            font-family: 'Kalam', cursive;
+            font-size: 1rem;
+            color: var(--sepia-mid);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .quiz-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--sepia-dark);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .quiz-sub {
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: var(--sepia-mid);
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .quiz-cards {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .quiz-card {
+            width: 200px;
+            padding: 2.5rem 1.5rem;
+            border: 2px solid var(--sepia-light);
+            border-radius: 4px;
+            background: rgba(245, 237, 224, 0.8);
+            text-align: center;
+            cursor: none;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 42, 26, 0.15);
+            border-color: var(--sepia-dark);
+        }
+
+        .quiz-card.selected {
+            background: var(--sepia-dark);
+            color: var(--cream);
+            border-color: var(--sepia-dark);
+            transform: translateY(-8px);
+        }
+
+        .quiz-card.selected .quiz-card-era,
+        .quiz-card.selected .quiz-card-years,
+        .quiz-card.selected .quiz-card-lost {
+            color: var(--cream);
+        }
+
+        .quiz-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .quiz-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .quiz-card-era {
+            font-family: 'Kalam', cursive;
+            font-size: 0.75rem;
+            color: var(--sepia-mid);
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-card-years {
+            font-family: 'Lora', serif;
+            font-size: 0.8rem;
+            color: var(--sepia-mid);
+            font-style: italic;
+        }
+
+        .quiz-card-lost {
+            display: none;
+            font-family: 'Kalam', cursive;
+            font-size: 0.85rem;
+            color: var(--terracotta);
+            margin-top: 0.8rem;
+        }
+
+        .quiz-card.selected .quiz-card-lost {
+            display: block;
+            color: var(--terra-soft);
+        }
+
+        .quiz-card.selected .quiz-card-title {
+            color: var(--cream);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+       FRAME 2 — TIMELINE BUBBLE PLOT
+    ============================================================ */
+        #frame-timeline {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #e8d5b8 0%, #d4c4a0 30%, #2d3a2d 100%);
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-eyebrow {
+            font-family: 'Kalam', cursive;
+            font-size: 0.9rem;
+            color: var(--sepia-mid);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--sepia-dark);
+        }
+
+        .timeline-counter {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Kalam', cursive;
+            font-size: 1.1rem;
+            color: var(--terracotta);
+            background: rgba(193, 68, 14, 0.08);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(193, 68, 14, 0.2);
+        }
+
+        #extinctCount {
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        /* Generation lanes */
+        .gen-lanes {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .gen-lane {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px dashed rgba(122, 92, 58, 0.25);
+            position: relative;
+            transition: opacity 0.5s;
+        }
+
+        .gen-lane.dimmed {
+            opacity: 0.35;
+        }
+
+        .gen-lane.active {
+            opacity: 1;
+        }
+
+        .gen-label {
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .gen-label-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            display: block;
+        }
+
+        .gen-label-years {
+            font-family: 'Kalam', cursive;
+            font-size: 0.75rem;
+            color: var(--sepia-mid);
+        }
+
+        .gen-bubbles {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bubble {
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex-shrink: 0;
+        }
+
+        .bubble:hover {
+            transform: scale(1.12);
+        }
+
+        .bubble:hover .bubble-tooltip {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(-4px);
+        }
+
+        .bubble-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Bubble sizes & opacities by generation */
+        .bubble-dadi {
+            background: radial-gradient(circle at 35% 35%, #8fbc8f, #4a7c59);
+            box-shadow: 0 4px 16px rgba(74, 124, 89, 0.4);
+        }
+
+        .bubble-mom {
+            background: radial-gradient(circle at 35% 35%, #c9a97a, #7a5c3a);
+            box-shadow: 0 4px 16px rgba(122, 92, 58, 0.35);
+        }
+
+        .bubble-us {
+            background: radial-gradient(circle at 35% 35%, #7a9abf, #2e4a7a);
+            box-shadow: 0 4px 16px rgba(46, 74, 122, 0.3);
+        }
+
+        .bubble-extinct {
+            background: radial-gradient(circle at 35% 35%, #ccc, #888);
+            box-shadow: none;
+            opacity: 0.25;
+        }
+
+        .bubble-tooltip {
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            background: rgba(245, 237, 224, 0.97);
+            border: 1px solid var(--sepia-light);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            min-width: 180px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+            box-shadow: 0 8px 24px rgba(59, 42, 26, 0.15);
+        }
+
+        .bubble-tooltip-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .bubble-tooltip-heals {
+            font-family: 'Kalam', cursive;
+            font-size: 0.75rem;
+            color: var(--sepia-mid);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .bubble-tooltip-quote {
+            font-family: 'Lora', serif;
+            font-size: 0.75rem;
+            color: var(--terracotta);
+            font-style: italic;
+        }
+
+        .extinct-marker {
+            font-size: 0.7rem;
+            color: #888;
+            font-family: 'Kalam', cursive;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        /* Milestone stamps */
+        .milestone-row {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1000px;
+            margin: 2rem auto 0;
+            padding: 0 140px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .milestone-stamp {
+            background: rgba(245, 237, 224, 0.15);
+            border: 1px solid rgba(245, 237, 224, 0.3);
+            border-radius: 4px;
+            padding: 0.5rem 0.8rem;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .milestone-year {
+            font-family: 'Kalam', cursive;
+            font-size: 0.8rem;
+            color: var(--gold);
+            display: block;
+        }
+
+        .milestone-event {
+            font-family: 'Lora', serif;
+            font-size: 0.7rem;
+            color: rgba(245, 237, 224, 0.75);
+            font-style: italic;
+        }
+
+        /* ============================================================
+       FRAME 3 — EASTER EGG CARD FLIP
+    ============================================================ */
+        #frame-cards {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #1a1208 0%, #2d1f0e 60%, #3b2a1a 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #frame-cards::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 50% 50%, rgba(212, 160, 23, 0.04) 0%, transparent 70%);
+        }
+
+        .cards-eyebrow {
+            font-family: 'Kalam', cursive;
+            font-size: 0.9rem;
+            color: var(--sepia-light);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .cards-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--cream);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .cards-sub {
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: rgba(245, 237, 224, 0.55);
+            font-style: italic;
+            margin-bottom: 3.5rem;
+        }
+
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 3D Flip Card */
+        .flip-card {
+            width: 180px;
+            height: 240px;
+            perspective: 1000px;
+            cursor: none;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #f5e8c8 0%, #e8d4a0 40%, #dcc890 100%);
+            border: 2px solid rgba(122, 92, 58, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .flip-card-front::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px dashed rgba(122, 92, 58, 0.3);
+            border-radius: 4px;
+        }
+
+        .card-face-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-face-label {
+            font-family: 'Kalam', cursive;
+            font-size: 0.8rem;
+            color: rgba(122, 92, 58, 0.6);
+            text-align: center;
+        }
+
+        .card-face-tap {
+            position: absolute;
+            bottom: 1rem;
+            font-family: 'Kalam', cursive;
+            font-size: 0.7rem;
+            color: rgba(122, 92, 58, 0.4);
+            font-style: italic;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #1a2a0a 0%, #2d4a1a 100%);
+            border: 2px solid var(--green-mid);
+            box-shadow: 0 0 30px rgba(143, 188, 143, 0.25), 0 8px 32px rgba(0, 0, 0, 0.5);
+            transform: rotateY(180deg);
+            text-align: center;
+            gap: 0.5rem;
+        }
+
+        .card-back-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 8px rgba(143, 188, 143, 0.8));
+        }
+
+        .card-back-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--cream);
+        }
+
+        .card-back-heals {
+            font-family: 'Kalam', cursive;
+            font-size: 0.7rem;
+            color: var(--green-light);
+        }
+
+        .card-back-how {
+            font-family: 'Lora', serif;
+            font-size: 0.68rem;
+            color: rgba(245, 237, 224, 0.65);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .card-back-gen {
+            font-family: 'Kalam', cursive;
+            font-size: 0.65rem;
+            color: var(--gold);
+            margin-top: 0.3rem;
+        }
+
+        .card-share-btn {
+            margin-top: 0.5rem;
+            background: rgba(143, 188, 143, 0.2);
+            border: 1px solid var(--green-mid);
+            color: var(--green-light);
+            font-family: 'Kalam', cursive;
+            font-size: 0.65rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 12px;
+            cursor: none;
+            transition: background 0.2s;
+        }
+
+        .card-share-btn:hover {
+            background: rgba(143, 188, 143, 0.35);
+        }
+
+        /* ============================================================
+       FRAME 4 — CONTRIBUTION / THANK YOU
+    ============================================================ */
+        #frame-contribution {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #f5ede0 0%, #ede0cc 100%);
+            padding: 6rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contrib-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contrib-eyebrow {
+            font-family: 'Kalam', cursive;
+            font-size: 0.9rem;
+            color: var(--sepia-mid);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.8rem;
+        }
+
+        .contrib-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--sepia-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .contrib-sub {
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: var(--sepia-mid);
+            font-style: italic;
+        }
+
+        .contrib-form {
+            width: 100%;
+            max-width: 560px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-label {
+            font-family: 'Kalam', cursive;
+            font-size: 0.85rem;
+            color: var(--sepia-mid);
+        }
+
+        .form-input,
+        .form-textarea {
+            font-family: 'Kalam', cursive;
+            font-size: 1rem;
+            color: var(--sepia-dark);
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-bottom: 2px solid var(--sepia-light);
+            padding: 0.6rem 0.4rem;
+            outline: none;
+            transition: border-color 0.3s;
+            cursor: none;
+            resize: none;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-bottom-color: var(--sepia-dark);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            border: 1px solid var(--sepia-light);
+            padding: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .form-submit {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--cream);
+            background: var(--sepia-dark);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            cursor: none;
+            align-self: flex-start;
+            transition: background 0.3s, transform 0.2s;
+            letter-spacing: 0.05em;
+        }
+
+        .form-submit:hover {
+            background: var(--sepia-mid);
+            transform: translateY(-2px);
+        }
+
+        /* Thank you message */
+        #thankYouMsg {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #thankYouMsg.visible {
+            display: block;
+        }
+
+        .thankyou-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .thankyou-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .thankyou-body {
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: var(--sepia-mid);
+            font-style: italic;
+        }
+
+        /* Remedy Garden */
+        .garden-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            text-align: center;
+            margin: 3rem 0 1.5rem;
+        }
+
+        .remedy-garden {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 700px;
+        }
+
+        .garden-tile {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--sepia-light);
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        .garden-tile-icon {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .garden-tile-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            display: block;
+        }
+
+        .garden-tile-person {
+            font-family: 'Kalam', cursive;
+            font-size: 0.7rem;
+            color: var(--sepia-mid);
+        }
+
+        /* ============ PARALLAX DIVIDER ============ */
+        .parallax-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--sepia-light), var(--sepia-dark), var(--sepia-light), transparent);
+            margin: 0;
+        }
+
+        /* ============ UTILITY ============ */
+        .section-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--sepia-light);
+            margin: 1.5rem auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CURSOR (leaf-shaped) -->
+    <div id="cy-cursor">
+        <svg viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 34 C14 34 2 23 2 14 C2 7.4 7.4 2 14 2 C20.6 2 26 7.4 26 14 C26 23 14 34 14 34Z" fill="#2d5a1a"
+                opacity="0.92" />
+            <path d="M14 34 C14 34 2 23 2 14" stroke="#4a8a2a" stroke-width="1.5" fill="none" opacity="0.6" />
+            <path d="M14 5 C14 5 10 11 14 22 C18 11 14 5 14 5Z" fill="#7ab84a" opacity="0.65" />
+            <path d="M8 10 C8 10 14 14 14 22" stroke="#5a9a30" stroke-width="1" fill="none" opacity="0.5" />
+            <path d="M20 10 C20 10 14 14 14 22" stroke="#5a9a30" stroke-width="1" fill="none" opacity="0.5" />
+        </svg>
+    </div>
+
+    <!-- Leaf burst canvas -->
+    <canvas id="leafBurstCanvas"></canvas>
+
+    <!-- SOUND TOGGLE -->
+    <button id="soundToggle">🔇 Sound</button>
+
+    <!-- SCORE BADGE -->
+    <div id="scoreBadge">🌿 You lost — of 7 remedies</div>
+
+    <!-- ======================================================
+       FRAME 1 — NUSKHE COURTYARD
+  ====================================================== -->
+    <section id="frame-courtyard">
+
+        <!-- Floral tile border top -->
+        <div class="cy-tile-border">
+            <svg width="100%" height="68" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="floraltile" x="0" y="0" width="68" height="68" patternUnits="userSpaceOnUse">
+                        <rect width="68" height="68" fill="#ddeaf5" />
+                        <rect x="2" y="2" width="64" height="64" fill="none" stroke="#3a5fa0" stroke-width="0.5"
+                            opacity="0.3" />
+                        <!-- 8-petal flower -->
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(45,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(90,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(135,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(180,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(225,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(270,34,34)" />
+                        <ellipse cx="34" cy="20" rx="4.5" ry="8" fill="none" stroke="#3a5fa0" stroke-width="1.1"
+                            transform="rotate(315,34,34)" />
+                        <circle cx="34" cy="34" r="4" fill="none" stroke="#3a5fa0" stroke-width="1.2" />
+                        <circle cx="34" cy="34" r="2" fill="#3a5fa0" opacity="0.6" />
+                        <!-- Corner buds -->
+                        <circle cx="10" cy="10" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+                        <circle cx="58" cy="10" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+                        <circle cx="10" cy="58" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+                        <circle cx="58" cy="58" r="3.5" fill="none" stroke="#3a5fa0" stroke-width="1" />
+                        <!-- Leaf pairs -->
+                        <path d="M15 15 Q20 9 19 19 Q13 18 15 15Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+                        <path d="M53 15 Q48 9 49 19 Q55 18 53 15Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+                        <path d="M15 53 Q20 59 19 49 Q13 50 15 53Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+                        <path d="M53 53 Q48 59 49 49 Q55 50 53 53Z" fill="none" stroke="#3a5fa0" stroke-width="0.8" />
+                        <!-- Edge dots -->
+                        <circle cx="34" cy="5" r="2" fill="#3a5fa0" opacity="0.45" />
+                        <circle cx="34" cy="63" r="2" fill="#3a5fa0" opacity="0.45" />
+                        <circle cx="5" cy="34" r="2" fill="#3a5fa0" opacity="0.45" />
+                        <circle cx="63" cy="34" r="2" fill="#3a5fa0" opacity="0.45" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="68" fill="url(#floraltile)" />
+                <line x1="0" y1="67" x2="100%" y2="67" stroke="#3a5fa0" stroke-width="1.5" opacity="0.25" />
+            </svg>
+        </div>
+
+        <!-- Title — shifted down -->
+        <div class="cy-title-block">
+            <span class="cy-dadi-ke">DADI ke</span>
+            <span class="cy-nuskhe">Nuskhe</span>
+        </div>
+
+        <!-- LEFT SHELF (straight vertical posts) -->
+        <svg class="cy-shelf cy-shelf-left" viewBox="0 0 220 640" preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg">
+            <!-- Posts -->
+            <rect x="18" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+            <rect x="189" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+            <!-- Shelves -->
+            <rect x="10" y="108" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="228" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="348" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="468" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="578" width="200" height="12" rx="3" fill="#8b5020" />
+
+            <!-- Shelf 1: hanging succulent left + cactus right (FILLED) -->
+            <g transform="translate(65,108)">
+                <rect x="-20" y="-16" width="40" height="16" rx="5" fill="#c1440e" />
+                <ellipse cx="0" cy="-16" rx="20" ry="5" fill="#d4653a" />
+                <ellipse cx="0" cy="-40" rx="22" ry="22" fill="#3d8028" />
+                <path d="M-18-16 Q-28 10 -24 36 Q-18 52 -22 68" fill="none" stroke="#5aaa38" stroke-width="2" />
+                <path d="M18-16 Q28 10 24 36" fill="none" stroke="#5aaa38" stroke-width="2" />
+                <ellipse cx="-22" cy="70" rx="7" ry="5" fill="#4a9028" />
+            </g>
+            <g transform="translate(160,108)">
+                <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+                <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+                <rect x="-8" y="-62" width="16" height="50" rx="8" fill="#4a8a20" />
+                <rect x="-19" y="-52" width="13" height="24" rx="6" fill="#5a9a28" />
+                <rect x="6" y="-47" width="13" height="20" rx="6" fill="#5a9a28" />
+                <line x1="-8" y1="-52" x2="-8" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+                <line x1="0" y1="-60" x2="0" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+                <line x1="8" y1="-52" x2="8" y2="-15" stroke="#2a5a10" stroke-width="0.8" />
+            </g>
+
+            <!-- Shelf 2: DOTTED left + sansevieria right -->
+            <g transform="translate(65,228)" opacity="0.22" fill="none" stroke="#3a6018" stroke-dasharray="3,2"
+                stroke-width="1.3">
+                <path d="M-24 2 Q-28-16 -24-32 Q-18-48 0-50 Q18-48 24-32 Q28-16 24 2Z" />
+                <ellipse cx="0" cy="2" rx="24" ry="6" />
+                <line x1="0" y1="0" x2="0" y2="-42" />
+                <path d="M0-18 Q-16-14 -18-28 Q-8-24 0-18Z" />
+                <path d="M0-18 Q16-14 18-28 Q8-24 0-18Z" />
+            </g>
+            <g transform="translate(160,228)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#8a7060" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#a09080" />
+                <path d="M-10-14 Q-14-52 -7-84 Q0-94 7-84 Q14-52 10-14Z" fill="#3d7a28" />
+                <path d="M-6-14 Q-10-48 -3-74 Q2-82 7-74 Q11-48 7-14Z" fill="#5aaa40" opacity="0.8" />
+                <path d="M-14-14 Q-18-44 -12-64 Q-7-72 -2-64 Q2-44 -2-14Z" fill="#3d7a28" />
+                <path d="M-10-14 Q-14-52 -7-82" fill="none" stroke="#d4c030" stroke-width="1.5" opacity="0.65" />
+                <path d="M10-14 Q14-52 7-82" fill="none" stroke="#d4c030" stroke-width="1.5" opacity="0.65" />
+            </g>
+
+            <!-- Shelf 3: tulsi left + fern right (FILLED) -->
+            <g transform="translate(65,348)">
+                <rect x="-22" y="-18" width="44" height="18" rx="5" fill="#b84020" />
+                <ellipse cx="0" cy="-18" rx="22" ry="5" fill="#d0603a" />
+                <ellipse cx="0" cy="-52" rx="28" ry="30" fill="#2d6a18" />
+                <ellipse cx="-16" cy="-36" rx="16" ry="22" fill="#3d8028" />
+                <ellipse cx="16" cy="-36" rx="16" ry="22" fill="#3d8028" />
+                <ellipse cx="0" cy="-68" rx="14" ry="18" fill="#5aaa38" />
+                <circle cx="-3" cy="-76" r="3" fill="#8a3aaa" />
+                <circle cx="4" cy="-79" r="2.5" fill="#9a4aba" />
+                <circle cx="0" cy="-83" r="3" fill="#8a3aaa" />
+            </g>
+            <g transform="translate(160,348)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+                <line x1="0" y1="-13" x2="0" y2="-62" stroke="#3a6018" stroke-width="2" />
+                <path d="M0-28 Q-18-24 -16-36 Q-8-32 0-28Z" fill="#5aaa38" />
+                <path d="M0-28 Q18-24 16-36 Q8-32 0-28Z" fill="#5aaa38" />
+                <path d="M0-44 Q-16-38 -14-50 Q-6-46 0-44Z" fill="#4a9a28" />
+                <path d="M0-44 Q16-38 14-50 Q6-46 0-44Z" fill="#4a9a28" />
+                <path d="M0-56 Q-10-52 -8-64 Q-2-60 0-56Z" fill="#5aaa38" />
+                <path d="M0-56 Q10-52 8-64 Q2-60 0-56Z" fill="#5aaa38" />
+            </g>
+
+            <!-- Shelf 4: monstera left + DOTTED right -->
+            <g transform="translate(65,468)">
+                <rect x="-18" y="-16" width="36" height="16" rx="4" fill="#c06030" />
+                <ellipse cx="0" cy="-16" rx="18" ry="4" fill="#d08050" />
+                <path d="M0-16 Q-10-28 -6-50 Q0-58 6-50 Q10-28 0-16Z" fill="#2d6a18" />
+                <path d="M0-28 Q-22-34 -24-52 Q-14-50 0-28Z" fill="#3d8028" />
+                <path d="M0-28 Q22-34 24-52 Q14-50 0-28Z" fill="#3d8028" />
+                <path d="M0-44 Q-16-48 -16-64 Q-8-62 0-44Z" fill="#4a9030" />
+                <path d="M0-44 Q16-48 16-64 Q8-62 0-44Z" fill="#4a9030" />
+            </g>
+            <g transform="translate(160,468)" opacity="0.22" fill="none" stroke="#3a6018" stroke-dasharray="3,2"
+                stroke-width="1.3">
+                <path d="M-18 2 Q-20-12 -16-26 Q-10-40 0-42 Q10-40 16-26 Q20-12 18 2Z" />
+                <ellipse cx="0" cy="2" rx="18" ry="4" />
+                <ellipse cx="0" cy="-50" rx="20" ry="18" />
+                <line x1="0" y1="1" x2="0" y2="-34" />
+            </g>
+
+            <!-- Shelf 5: DOTTED left + small plant right -->
+            <g transform="translate(65,578)" opacity="0.22" fill="none" stroke="#3a6018" stroke-dasharray="3,2"
+                stroke-width="1.3">
+                <path d="M-22 2 Q-26-14 -22-30 Q-16-44 0-46 Q16-44 22-30 Q26-14 22 2Z" />
+                <ellipse cx="0" cy="2" rx="22" ry="5" />
+                <ellipse cx="0" cy="-54" rx="24" ry="20" />
+                <line x1="0" y1="1" x2="0" y2="-36" />
+            </g>
+            <g transform="translate(160,578)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+                <ellipse cx="0" cy="-44" rx="20" ry="28" fill="#3d8028" />
+                <ellipse cx="-13" cy="-30" rx="13" ry="18" fill="#5aaa38" opacity="0.85" />
+                <ellipse cx="13" cy="-30" rx="13" ry="18" fill="#5aaa38" opacity="0.85" />
+            </g>
+        </svg>
+
+        <!-- RIGHT SHELF -->
+        <svg class="cy-shelf cy-shelf-right" viewBox="0 0 220 640" preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+            <rect x="189" y="0" width="13" height="640" rx="4" fill="#6b3a10" />
+            <rect x="10" y="108" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="228" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="348" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="468" width="200" height="12" rx="3" fill="#8b5020" />
+            <rect x="10" y="578" width="200" height="12" rx="3" fill="#8b5020" />
+
+            <!-- Shelf 1: big tulsi + cactus (FILLED) -->
+            <g transform="translate(65,108)">
+                <rect x="-20" y="-18" width="40" height="18" rx="5" fill="#c1440e" />
+                <ellipse cx="0" cy="-18" rx="20" ry="5" fill="#d4653a" />
+                <ellipse cx="0" cy="-54" rx="25" ry="32" fill="#2d6a18" />
+                <ellipse cx="-15" cy="-38" rx="15" ry="22" fill="#3d8028" />
+                <ellipse cx="15" cy="-38" rx="15" ry="22" fill="#3d8028" />
+                <ellipse cx="0" cy="-70" rx="13" ry="17" fill="#5aaa38" />
+            </g>
+            <g transform="translate(160,108)">
+                <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+                <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+                <rect x="-8" y="-64" width="16" height="52" rx="8" fill="#4a8a20" />
+                <rect x="-19" y="-52" width="13" height="22" rx="6" fill="#5a9a28" />
+                <rect x="6" y="-46" width="13" height="18" rx="6" fill="#5a9a28" />
+            </g>
+
+            <!-- Shelf 2: DOTTED left + monstera right -->
+            <g transform="translate(65,228)" opacity="0.22" fill="none" stroke="#3a6018" stroke-dasharray="3,2"
+                stroke-width="1.3">
+                <path d="M-24 2 Q-28-18 -24-34 Q-18-48 0-50 Q18-48 24-34 Q28-18 24 2Z" />
+                <ellipse cx="0" cy="2" rx="24" ry="6" />
+                <line x1="0" y1="0" x2="0" y2="-42" />
+                <path d="M0-20 Q-16-16 -18-30 Q-8-26 0-20Z" />
+                <path d="M0-20 Q16-16 18-30 Q8-26 0-20Z" />
+            </g>
+            <g transform="translate(160,228)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+                <path d="M0-14 Q-10-28 -6-52 Q0-60 6-52 Q10-28 0-14Z" fill="#2d6a18" />
+                <path d="M0-30 Q-22-34 -22-52 Q-14-50 0-30Z" fill="#3d8028" />
+                <path d="M0-30 Q22-34 22-52 Q14-50 0-30Z" fill="#3d8028" />
+                <path d="M0-44 Q-16-48 -16-62 Q-8-60 0-44Z" fill="#4a9030" />
+                <path d="M0-44 Q16-48 16-62 Q8-60 0-44Z" fill="#4a9030" />
+            </g>
+
+            <!-- Shelf 3: trailing plant + fern (FILLED) -->
+            <g transform="translate(65,348)">
+                <rect x="-18" y="-16" width="36" height="16" rx="4" fill="#b84020" />
+                <ellipse cx="0" cy="-16" rx="18" ry="4" fill="#d0603a" />
+                <ellipse cx="0" cy="-44" rx="22" ry="26" fill="#3d8028" />
+                <path d="M-18-16 Q-30 10 -26 34" fill="none" stroke="#5aaa38" stroke-width="2" />
+                <path d="M18-16 Q30 10 26 34 Q20 50 24 64" fill="none" stroke="#5aaa38" stroke-width="2" />
+                <ellipse cx="-26" cy="36" rx="7" ry="5" fill="#4a9028" />
+            </g>
+            <g transform="translate(160,348)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#8a7060" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#a09080" />
+                <line x1="0" y1="-13" x2="0" y2="-60" stroke="#3a6018" stroke-width="2" />
+                <path d="M0-26 Q-18-22 -16-34 Q-8-30 0-26Z" fill="#5aaa38" />
+                <path d="M0-26 Q18-22 16-34 Q8-30 0-26Z" fill="#5aaa38" />
+                <path d="M0-40 Q-14-36 -12-48 Q-6-44 0-40Z" fill="#4a9a28" />
+                <path d="M0-40 Q14-36 12-48 Q6-44 0-40Z" fill="#4a9a28" />
+                <path d="M0-52 Q-10-48 -8-60 Q-2-56 0-52Z" fill="#5aaa38" />
+                <path d="M0-52 Q10-48 8-60 Q2-56 0-52Z" fill="#5aaa38" />
+            </g>
+
+            <!-- Shelf 4: big plant + DOTTED right -->
+            <g transform="translate(65,468)">
+                <rect x="-20" y="-16" width="40" height="16" rx="5" fill="#c06030" />
+                <ellipse cx="0" cy="-16" rx="20" ry="5" fill="#d08050" />
+                <ellipse cx="0" cy="-46" rx="24" ry="28" fill="#2d6a18" />
+                <ellipse cx="-15" cy="-32" rx="15" ry="20" fill="#3d8028" />
+                <ellipse cx="15" cy="-32" rx="15" ry="20" fill="#3d8028" />
+                <ellipse cx="0" cy="-62" rx="13" ry="16" fill="#5aaa38" />
+            </g>
+            <g transform="translate(160,468)" opacity="0.22" fill="none" stroke="#3a6018" stroke-dasharray="3,2"
+                stroke-width="1.3">
+                <path d="M-18 2 Q-20-14 -16-28 Q-10-40 0-42 Q10-40 16-28 Q20-14 18 2Z" />
+                <ellipse cx="0" cy="2" rx="18" ry="4" />
+                <ellipse cx="0" cy="-50" rx="20" ry="18" />
+                <line x1="0" y1="1" x2="0" y2="-34" />
+            </g>
+
+            <!-- Shelf 5: two filled plants -->
+            <g transform="translate(65,578)">
+                <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#c17a30" />
+                <ellipse cx="0" cy="-14" rx="16" ry="4" fill="#d4935a" />
+                <ellipse cx="0" cy="-42" rx="20" ry="26" fill="#3d8028" />
+                <ellipse cx="-12" cy="-28" rx="12" ry="18" fill="#5aaa38" opacity="0.85" />
+                <ellipse cx="12" cy="-28" rx="12" ry="18" fill="#5aaa38" opacity="0.85" />
+            </g>
+            <g transform="translate(160,578)">
+                <rect x="-15" y="-14" width="30" height="14" rx="4" fill="#8a7060" />
+                <ellipse cx="0" cy="-14" rx="15" ry="4" fill="#a09070" />
+                <rect x="-8" y="-62" width="16" height="50" rx="8" fill="#4a8a20" />
+                <rect x="-19" y="-50" width="13" height="22" rx="6" fill="#5a9a28" />
+                <rect x="6" y="-46" width="13" height="18" rx="6" fill="#5a9a28" />
+            </g>
+        </svg>
+
+        <!-- JHULA SWING — centred, no bird, shifted down -->
+        <div class="cy-jhula" id="cyJhula">
+            <svg width="360" height="320" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ropes -->
+                <line x1="100" y1="0" x2="88" y2="250" stroke="#8b6030" stroke-width="3.5" />
+                <line x1="260" y1="0" x2="272" y2="250" stroke="#8b6030" stroke-width="3.5" />
+                <!-- Rope texture -->
+                <g stroke="#6b4820" stroke-width="1.1" opacity="0.5">
+                    <line x1="99" y1="30" x2="95" y2="40" />
+                    <line x1="98" y1="65" x2="94" y2="75" />
+                    <line x1="96" y1="100" x2="92" y2="110" />
+                    <line x1="94" y1="135" x2="90" y2="145" />
+                    <line x1="92" y1="170" x2="88" y2="180" />
+                    <line x1="90" y1="205" x2="86" y2="215" />
+                    <line x1="261" y1="30" x2="265" y2="40" />
+                    <line x1="262" y1="65" x2="266" y2="75" />
+                    <line x1="264" y1="100" x2="268" y2="110" />
+                    <line x1="266" y1="135" x2="270" y2="145" />
+                    <line x1="268" y1="170" x2="272" y2="180" />
+                    <line x1="270" y1="205" x2="274" y2="215" />
+                </g>
+                <!-- Armrests -->
+                <rect x="74" y="202" width="22" height="56" rx="5" fill="#8b5e20" />
+                <rect x="264" y="202" width="22" height="56" rx="5" fill="#8b5e20" />
+                <!-- Backrest with even slats -->
+                <rect x="76" y="198" width="208" height="48" rx="6" fill="#9a6828" />
+                <rect x="76" y="198" width="208" height="48" rx="6" fill="none" stroke="#6b4820" stroke-width="1.4" />
+                <g fill="#f7f2e4">
+                    <rect x="94" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="115" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="136" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="157" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="178" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="199" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="220" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="241" y="207" width="13" height="28" rx="6.5" />
+                    <rect x="262" y="207" width="13" height="28" rx="6.5" />
+                </g>
+                <!-- Seat -->
+                <rect x="76" y="244" width="208" height="18" rx="5" fill="#9a6828" />
+                <rect x="76" y="244" width="208" height="18" rx="5" fill="none" stroke="#6b4820" stroke-width="1.2" />
+                <g stroke="#6b4820" stroke-width="0.9" opacity="0.4">
+                    <line x1="96" y1="244" x2="96" y2="262" />
+                    <line x1="117" y1="244" x2="117" y2="262" />
+                    <line x1="138" y1="244" x2="138" y2="262" />
+                    <line x1="159" y1="244" x2="159" y2="262" />
+                    <line x1="180" y1="244" x2="180" y2="262" />
+                    <line x1="201" y1="244" x2="201" y2="262" />
+                    <line x1="222" y1="244" x2="222" y2="262" />
+                    <line x1="243" y1="244" x2="243" y2="262" />
+                    <line x1="264" y1="244" x2="264" y2="262" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- SNAP SILHOUETTES (hidden inside shelf positions, JS controlled) -->
+        <!-- These are invisible markers at shelf positions where plants snap to -->
+        <!-- Left shelf empty slots: shelf2-left, shelf4-right, shelf5-left -->
+        <div class="cy-sil pulse" id="sil-tulsi"
+            style="left:4.5%; top:calc(68px + 228px - 80px); width:60px; height:80px; background:rgba(80,120,40,0.12); border:1.5px dashed rgba(80,120,40,0.25); border-radius:4px;">
+        </div>
+        <div class="cy-sil pulse" id="sil-pudina"
+            style="left:11%;  top:calc(68px + 468px - 70px); width:55px; height:70px; background:rgba(80,120,40,0.12); border:1.5px dashed rgba(80,120,40,0.25); border-radius:4px;">
+        </div>
+        <div class="cy-sil pulse" id="sil-neem"
+            style="left:4.5%; top:calc(68px + 578px - 80px); width:60px; height:80px; background:rgba(80,120,40,0.12); border:1.5px dashed rgba(80,120,40,0.25); border-radius:4px;">
+        </div>
+        <!-- Right shelf empty slots: shelf2-left, shelf4-right -->
+        <div class="cy-sil pulse" id="sil-ajwain"
+            style="right:11%; top:calc(68px + 228px - 75px); width:55px; height:75px; background:rgba(80,120,40,0.12); border:1.5px dashed rgba(80,120,40,0.25); border-radius:4px;">
+        </div>
+        <div class="cy-sil pulse" id="sil-giloy"
+            style="right:4.5%;top:calc(68px + 468px - 70px); width:55px; height:70px; background:rgba(80,120,40,0.12); border:1.5px dashed rgba(80,120,40,0.25); border-radius:4px;">
+        </div>
+
+        <!-- 5 DRAGGABLE PLANTS — bottom centre -->
+        <!-- Tulsi -->
+        <div class="cy-plant" id="plant-tulsi" data-target="sil-tulsi" data-word="0"
+            style="left:calc(50% - 230px); bottom:40px;">
+            <svg width="72" height="100" viewBox="-36 -85 72 100">
+                <path d="M-22 14 Q-26-2 -22-18 Q-16-32 0-34 Q16-32 22-18 Q26-2 22 14Z" fill="#c1440e" />
+                <ellipse cx="0" cy="-34" rx="20" ry="5" fill="#d4653a" />
+                <line x1="0" y1="-33" x2="0" y2="-60" stroke="#2a5010" stroke-width="2.5" />
+                <path d="M0-45 Q-16-43 -18-57 Q-8-52 0-45Z" fill="#3d8020" />
+                <path d="M0-45 Q16-43 18-57 Q8-52 0-45Z" fill="#3d8020" />
+                <path d="M0-57 Q-14-55 -14-69 Q-6-62 0-57Z" fill="#4a9a28" />
+                <path d="M0-57 Q14-55 14-69 Q6-62 0-57Z" fill="#4a9a28" />
+                <path d="M0-68 Q-8-68 -6-80 Q0-74 0-68Z" fill="#5aaa38" />
+                <path d="M0-68 Q8-68 6-80 Q0-74 0-68Z" fill="#5aaa38" />
+                <circle cx="-2" cy="-83" r="2.5" fill="#8a3aaa" />
+                <circle cx="3" cy="-85" r="2" fill="#9a4aba" />
+            </svg>
+            <div
+                style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+                tulsi</div>
+        </div>
+        <!-- Pudina -->
+        <div class="cy-plant" id="plant-pudina" data-target="sil-pudina" data-word="1"
+            style="left:calc(50% - 120px); bottom:40px;">
+            <svg width="68" height="95" viewBox="-34 -80 68 95">
+                <path d="M-20 14 Q-24-2 -20-18 Q-14-32 0-34 Q14-32 20-18 Q24-2 20 14Z" fill="#b84020" />
+                <ellipse cx="0" cy="-34" rx="17" ry="4" fill="#d0603a" />
+                <line x1="0" y1="-33" x2="0" y2="-52" stroke="#2a5010" stroke-width="2" />
+                <line x1="0" y1="-42" x2="-14" y2="-55" stroke="#2a5010" stroke-width="1.5" />
+                <line x1="0" y1="-42" x2="14" y2="-55" stroke="#2a5010" stroke-width="1.5" />
+                <path d="M-14-55 Q-24-51 -22-63 Q-14-59 -14-55Z" fill="#4a9a28" />
+                <path d="M-14-55 Q-22-61 -18-73 Q-12-67 -14-55Z" fill="#3d8020" />
+                <path d="M14-55 Q24-51 22-63 Q14-59 14-55Z" fill="#4a9a28" />
+                <path d="M14-55 Q22-61 18-73 Q12-67 14-55Z" fill="#3d8020" />
+                <path d="M0-52 Q-8-54 -6-66 Q0-60 0-52Z" fill="#5aaa38" />
+                <path d="M0-52 Q8-54 6-66 Q0-60 0-52Z" fill="#5aaa38" />
+            </svg>
+            <div
+                style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+                pudina</div>
+        </div>
+        <!-- Neem -->
+        <div class="cy-plant" id="plant-neem" data-target="sil-neem" data-word="2"
+            style="left:calc(50% - 10px); bottom:40px;">
+            <svg width="72" height="105" viewBox="-36 -90 72 105">
+                <path d="M-20 14 Q-22 0 -18-14 Q-12-28 0-30 Q12-28 18-14 Q22 0 20 14Z" fill="#c1440e" />
+                <ellipse cx="0" cy="-30" rx="16" ry="4" fill="#d4653a" />
+                <line x1="0" y1="-29" x2="0" y2="-62" stroke="#3a5010" stroke-width="2.5" />
+                <path d="M0-42 Q-20-44 -24-58" stroke="#2a5010" stroke-width="1.5" fill="none" />
+                <path d="M0-42 Q20-44 24-58" stroke="#2a5010" stroke-width="1.5" fill="none" />
+                <path d="M-24-58 Q-34-54 -30-68 Q-24-64 -24-58Z" fill="#3d8020" />
+                <path d="M24-58 Q34-54 30-68 Q24-64 24-58Z" fill="#3d8020" />
+                <path d="M0-54 Q-12-58 -14-74" stroke="#2a5010" stroke-width="1.2" fill="none" />
+                <path d="M0-54 Q12-58 14-74" stroke="#2a5010" stroke-width="1.2" fill="none" />
+                <path d="M-14-74 Q-20-70 -18-82 Q-12-78 -14-74Z" fill="#4a9a28" />
+                <path d="M14-74 Q20-70 18-82 Q12-78 14-74Z" fill="#4a9a28" />
+                <path d="M0-72 Q-6-70 -4-82 Q2-78 0-72Z" fill="#5aaa38" />
+            </svg>
+            <div
+                style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+                neem</div>
+        </div>
+        <!-- Ajwain -->
+        <div class="cy-plant" id="plant-ajwain" data-target="sil-ajwain" data-word="3"
+            style="left:calc(50% + 100px); bottom:40px;">
+            <svg width="66" height="90" viewBox="-33 -75 66 90">
+                <path d="M-18 14 Q-22 0 -18-14 Q-12-28 0-30 Q12-28 18-14 Q22 0 18 14Z" fill="#b84020" />
+                <ellipse cx="0" cy="-30" rx="16" ry="4" fill="#d0603a" />
+                <line x1="0" y1="-29" x2="0" y2="-48" stroke="#2a5010" stroke-width="2" />
+                <line x1="0" y1="-40" x2="-10" y2="-52" stroke="#2a5010" stroke-width="1.3" />
+                <line x1="0" y1="-40" x2="10" y2="-52" stroke="#2a5010" stroke-width="1.3" />
+                <line x1="0" y1="-40" x2="0" y2="-55" stroke="#2a5010" stroke-width="1.3" />
+                <path d="M-10-52 Q-18-48 -16-60 Q-10-56 -10-52Z" fill="#5aaa38" />
+                <path d="M10-52 Q18-48 16-60 Q10-56 10-52Z" fill="#5aaa38" />
+                <path d="M0-55 Q-8-57 -6-69 Q0-63 0-55Z" fill="#4a9a28" />
+                <path d="M0-55 Q8-57 6-69 Q0-63 0-55Z" fill="#4a9a28" />
+                <circle cx="-6" cy="-71" r="2" fill="#f0f0e0" />
+                <circle cx="0" cy="-74" r="2" fill="#f0f0e0" />
+                <circle cx="6" cy="-71" r="2" fill="#f0f0e0" />
+            </svg>
+            <div
+                style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+                ajwain</div>
+        </div>
+        <!-- Giloy -->
+        <div class="cy-plant" id="plant-giloy" data-target="sil-giloy" data-word="4"
+            style="left:calc(50% + 210px); bottom:40px;">
+            <svg width="68" height="100" viewBox="-34 -85 68 100">
+                <path d="M-20 14 Q-24 0 -20-14 Q-14-28 0-30 Q14-28 20-14 Q24 0 20 14Z" fill="#8a7060" />
+                <ellipse cx="0" cy="-30" rx="18" ry="5" fill="#a09070" />
+                <path d="M-10-30 Q-14-68 -7-96 Q0-108 7-96 Q14-68 10-30Z" fill="#3d7a28" />
+                <path d="M-6-30 Q-10-64 -3-88 Q2-98 7-88 Q11-64 7-30Z" fill="#5aaa40" opacity="0.85" />
+                <path d="M-14-30 Q-18-62 -12-82 Q-7-92 -2-82 Q2-62 -2-30Z" fill="#3d7a28" />
+                <path d="M-10-30 Q-14-68 -7-94" fill="none" stroke="#d4c030" stroke-width="1.4" opacity="0.65" />
+                <path d="M10-30 Q14-68 7-94" fill="none" stroke="#d4c030" stroke-width="1.4" opacity="0.65" />
+            </svg>
+            <div
+                style="text-align:center;font-family:Georgia,serif;font-size:10px;color:#5a3010;font-style:italic;margin-top:2px;">
+                giloy</div>
+        </div>
+
+        <!-- Hero text (revealed on all 5 snapped) -->
+        <div class="cy-hero" id="cyHero">
+            <span class="cy-hero-line" id="heroWord0">She never called it medicine.</span>
+            <span class="cy-hero-sub" id="heroSub">A story about what we forgot to remember</span>
+        </div>
+
+        <div class="cy-drag-hint" id="cyDragHint">drag the plants to find their home ↑</div>
+
+        <div class="cy-scroll-cue" id="cyScrollCue">
+            <span class="cy-scroll-leaf">🌿</span>
+            <span>scroll to remember</span>
+        </div>
+
+    </section>
+
+    <div class="parallax-divider"></div>
+
+    <!-- ======================================================
+       FRAME 1.5 — GENERATION QUIZ
+  ====================================================== -->
+    <section id="frame-quiz">
+        <p class="quiz-eyebrow">Before we begin</p>
+        <h2 class="quiz-title">Which generation are you?</h2>
+        <p class="quiz-sub">Your story of loss begins here</p>
+
+        <div class="quiz-cards">
+            <div class="quiz-card" data-gen="dadi" data-lost="1" onclick="selectGen(this)">
+                <span class="quiz-card-icon">👵</span>
+                <div class="quiz-card-title">Dadi's generation</div>
+                <span class="quiz-card-era">The courtyard era</span>
+                <span class="quiz-card-years">Born before 1960</span>
+                <span class="quiz-card-lost">You lost 1 of 7 remedies</span>
+            </div>
+            <div class="quiz-card" data-gen="mom" data-lost="4" onclick="selectGen(this)">
+                <span class="quiz-card-icon">👩</span>
+                <div class="quiz-card-title">Mom's generation</div>
+                <span class="quiz-card-era">The in-between era</span>
+                <span class="quiz-card-years">Born 1960 – 1985</span>
+                <span class="quiz-card-lost">You lost 4 of 7 remedies</span>
+            </div>
+            <div class="quiz-card" data-gen="us" data-lost="6" onclick="selectGen(this)">
+                <span class="quiz-card-icon">🧑‍💻</span>
+                <div class="quiz-card-title">Our generation</div>
+                <span class="quiz-card-era">The prescription era</span>
+                <span class="quiz-card-years">Born after 1985</span>
+                <span class="quiz-card-lost">You lost 6 of 7 remedies</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="parallax-divider"></div>
+
+    <!-- ======================================================
+       FRAME 2 — TIMELINE BUBBLE PLOT
+  ====================================================== -->
+    <section id="frame-timeline">
+        <div class="timeline-header">
+            <p class="timeline-eyebrow">Across three generations</p>
+            <h2 class="timeline-title">Here's what we forgot</h2>
+            <div class="section-divider"></div>
+            <div class="timeline-counter">
+                <span id="extinctCount">0</span> remedies now extinct from Indian kitchens
+            </div>
+        </div>
+
+        <div class="gen-lanes" id="genLanes">
+
+            <!-- DADI'S LANE -->
+            <div class="gen-lane" id="lane-dadi">
+                <div class="gen-label">
+                    <span class="gen-label-main">Dadi's era</span>
+                    <span class="gen-label-years">Pre-1960</span>
+                </div>
+                <div class="gen-bubbles">
+                    <!-- Bubble: Haldi Doodh | size 80 | full opacity -->
+                    <div class="bubble bubble-dadi" style="width:80px;height:80px;opacity:1;">
+                        <div class="bubble-inner">🍵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Haldi Doodh</span>
+                            <span class="bubble-tooltip-heals">Heals: Cold, inflammation, sleep</span>
+                            <span class="bubble-tooltip-quote">"Raat ko so jaoge bete"</span>
+                        </div>
+                    </div>
+                    <!-- Ajwain -->
+                    <div class="bubble bubble-dadi" style="width:70px;height:70px;opacity:0.95;">
+                        <div class="bubble-inner">🌾</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Ajwain + Black Salt</span>
+                            <span class="bubble-tooltip-heals">Heals: Digestion, bloating, gas</span>
+                            <span class="bubble-tooltip-quote">"Pet dard? Yeh lo."</span>
+                        </div>
+                    </div>
+                    <!-- Tulsi Kadha -->
+                    <div class="bubble bubble-dadi" style="width:75px;height:75px;opacity:1;">
+                        <div class="bubble-inner">🌿</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Tulsi Kadha</span>
+                            <span class="bubble-tooltip-heals">Heals: Fever, cough, immunity</span>
+                            <span class="bubble-tooltip-quote">"No doctor needed today"</span>
+                        </div>
+                    </div>
+                    <!-- Hing for colic -->
+                    <div class="bubble bubble-dadi" style="width:65px;height:65px;opacity:0.9;">
+                        <div class="bubble-inner">🫙</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Hing Paste</span>
+                            <span class="bubble-tooltip-heals">Heals: Infant colic, stomach cramps</span>
+                            <span class="bubble-tooltip-quote">"Every baby's first medicine"</span>
+                        </div>
+                    </div>
+                    <!-- Neem -->
+                    <div class="bubble bubble-dadi" style="width:72px;height:72px;opacity:0.95;">
+                        <div class="bubble-inner">🌱</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Neem Leaves</span>
+                            <span class="bubble-tooltip-heals">Heals: Skin, infections, blood</span>
+                            <span class="bubble-tooltip-quote">"The courtyard pharmacy"</span>
+                        </div>
+                    </div>
+                    <!-- Mulethi -->
+                    <div class="bubble bubble-dadi" style="width:60px;height:60px;opacity:0.85;">
+                        <div class="bubble-inner">🪵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Mulethi</span>
+                            <span class="bubble-tooltip-heals">Heals: Throat, voice, cough</span>
+                            <span class="bubble-tooltip-quote">"Chew. Don't swallow."</span>
+                        </div>
+                    </div>
+                    <!-- Methi -->
+                    <div class="bubble bubble-dadi" style="width:68px;height:68px;opacity:0.9;">
+                        <div class="bubble-inner">🟡</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Methi Seeds</span>
+                            <span class="bubble-tooltip-heals">Heals: Joints, hair, blood sugar</span>
+                            <span class="bubble-tooltip-quote">"Dadi's morning ritual"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOM'S LANE -->
+            <div class="gen-lane" id="lane-mom">
+                <div class="gen-label">
+                    <span class="gen-label-main">Mom's era</span>
+                    <span class="gen-label-years">1960 – 1985</span>
+                </div>
+                <div class="gen-bubbles">
+                    <div class="bubble bubble-mom" style="width:80px;height:80px;opacity:0.9;">
+                        <div class="bubble-inner">🍵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Haldi Doodh</span>
+                            <span class="bubble-tooltip-heals">Heals: Cold, inflammation</span>
+                            <span class="bubble-tooltip-quote">"Still made it, but less often"</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom" style="width:55px;height:55px;opacity:0.55;">
+                        <div class="bubble-inner">🌾</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Ajwain + Black Salt</span>
+                            <span class="bubble-tooltip-heals">Heals: Digestion</span>
+                            <span class="bubble-tooltip-quote">"Or just have an Antacid"</span>
+                            <span class="extinct-marker">Fading…</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom" style="width:65px;height:65px;opacity:0.7;">
+                        <div class="bubble-inner">🌿</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Tulsi Kadha</span>
+                            <span class="bubble-tooltip-heals">Heals: Fever, cough</span>
+                            <span class="bubble-tooltip-quote">"When Crocin didn't help"</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🫙</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Hing Paste</span>
+                            <span class="bubble-tooltip-heals">Mostly replaced by gripe water</span>
+                            <span class="extinct-marker">Nearly gone ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom" style="width:60px;height:60px;opacity:0.5;">
+                        <div class="bubble-inner">🌱</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Neem Leaves</span>
+                            <span class="bubble-tooltip-heals">Heals: Skin</span>
+                            <span class="bubble-tooltip-quote">"Ew, it's bitter"</span>
+                            <span class="extinct-marker">Fading…</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom bubble-extinct" style="width:60px;height:60px;">
+                        <div class="bubble-inner">🪵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Mulethi</span>
+                            <span class="extinct-marker">Replaced by lozenges ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-mom" style="width:55px;height:55px;opacity:0.6;">
+                        <div class="bubble-inner">🟡</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Methi Seeds</span>
+                            <span class="bubble-tooltip-heals">Still in the kitchen, rarely used</span>
+                            <span class="extinct-marker">Fading…</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OUR LANE -->
+            <div class="gen-lane" id="lane-us">
+                <div class="gen-label">
+                    <span class="gen-label-main">Our era</span>
+                    <span class="gen-label-years">Post-1985</span>
+                </div>
+                <div class="gen-bubbles">
+                    <div class="bubble bubble-us" style="width:72px;height:72px;opacity:0.7;">
+                        <div class="bubble-inner">🍵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Haldi Doodh</span>
+                            <span class="bubble-tooltip-heals">Now called "Golden Latte" at cafes</span>
+                            <span class="bubble-tooltip-quote">"₹400 at a Starbucks near you"</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🌾</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Ajwain + Black Salt</span>
+                            <span class="extinct-marker">Google it to find it ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us" style="width:55px;height:55px;opacity:0.4;">
+                        <div class="bubble-inner">🌿</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Tulsi Kadha</span>
+                            <span class="bubble-tooltip-heals">Revived briefly during Covid</span>
+                            <span class="extinct-marker">Then forgotten again…</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🫙</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Hing Paste</span>
+                            <span class="extinct-marker">What's hing? ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🌱</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Neem Leaves</span>
+                            <span class="extinct-marker">Only in shampoo ads ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🪵</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Mulethi</span>
+                            <span class="extinct-marker">Forgotten ✕</span>
+                        </div>
+                    </div>
+                    <div class="bubble bubble-us bubble-extinct" style="width:65px;height:65px;">
+                        <div class="bubble-inner">🟡</div>
+                        <div class="bubble-tooltip">
+                            <span class="bubble-tooltip-name">Methi Seeds</span>
+                            <span class="extinct-marker">Only as hair mask ✕</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /gen-lanes -->
+
+        <!-- Milestone stamps -->
+        <div class="milestone-row">
+            <div class="milestone-stamp">
+                <span class="milestone-year">1960s</span>
+                <span class="milestone-event">Antibiotic boom reaches India</span>
+            </div>
+            <div class="milestone-stamp">
+                <span class="milestone-year">1970s</span>
+                <span class="milestone-event">Nuclear families replace joint homes</span>
+            </div>
+            <div class="milestone-stamp">
+                <span class="milestone-year">1984</span>
+                <span class="milestone-event">Pharma deregulation in India</span>
+            </div>
+            <div class="milestone-stamp">
+                <span class="milestone-year">2000s</span>
+                <span class="milestone-event">Urban migration, no courtyards</span>
+            </div>
+            <div class="milestone-stamp">
+                <span class="milestone-year">2020</span>
+                <span class="milestone-event">Covid: brief revival of kadha</span>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="parallax-divider"></div>
+
+    <!-- ======================================================
+       FRAME 3 — EASTER EGG CARD FLIP
+  ====================================================== -->
+    <section id="frame-cards">
+        <p class="cards-eyebrow">— the remedies that survived —</p>
+        <h2 class="cards-title">Some of it is still here.</h2>
+        <p class="cards-sub">Hidden. Waiting. Pick a card.</p>
+
+        <div class="cards-grid">
+
+            <!-- Card 1: Haldi Doodh -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🍵</span>
+                        <span class="card-back-name">Haldi Doodh</span>
+                        <span class="card-back-heals">Cold · Inflammation · Sleep</span>
+                        <span class="card-back-how">Warm milk, half tsp turmeric, pinch of black pepper. Drink before
+                            bed.</span>
+                        <span class="card-back-gen">Dadi's generation · Always</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Haldi Doodh — warm milk with turmeric and black pepper before bed. Your dadi knew.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Ajwain -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🌾</span>
+                        <span class="card-back-name">Ajwain + Kala Namak</span>
+                        <span class="card-back-heals">Digestion · Bloating · Gas</span>
+                        <span class="card-back-how">A pinch of ajwain seeds with black salt in warm water. No antacid
+                            needed.</span>
+                        <span class="card-back-gen">Dadi's generation · After every heavy meal</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Ajwain + Kala Namak in warm water — better than any antacid. Nuskhe.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Tulsi Kadha -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🌿</span>
+                        <span class="card-back-name">Tulsi Kadha</span>
+                        <span class="card-back-heals">Fever · Cough · Immunity</span>
+                        <span class="card-back-how">Boil 10 tulsi leaves, ginger, 2 cloves. Strain. Add honey. Sip
+                            slowly.</span>
+                        <span class="card-back-gen">Every generation · First response to fever</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Tulsi Kadha — 10 tulsi leaves, ginger, cloves boiled together. Your first line of defense. Nuskhe.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Hing -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🫙</span>
+                        <span class="card-back-name">Hing Paste</span>
+                        <span class="card-back-heals">Colic · Stomach cramps · Nausea</span>
+                        <span class="card-back-how">A pinch of hing dissolved in warm water. Rub gently on the navel for
+                            infants.</span>
+                        <span class="card-back-gen">Dadi's generation · Every baby's first medicine</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Hing in warm water — the original colic cure. Every Indian baby knew this. Nuskhe.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Neem -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🌱</span>
+                        <span class="card-back-name">Neem Leaves Paste</span>
+                        <span class="card-back-heals">Skin · Infections · Blood purifier</span>
+                        <span class="card-back-how">Grind fresh neem leaves into paste. Apply to skin or boil and drink
+                            the water.</span>
+                        <span class="card-back-gen">Dadi's generation · The courtyard pharmacy</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Neem leaves — paste for skin, boiled water for blood. The tree in every courtyard was a pharmacy. Nuskhe.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Methi -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="card-face-icon">🂠</span>
+                        <span class="card-face-label">Recipe from the past</span>
+                        <span class="card-face-tap">tap to reveal</span>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="card-back-icon">🟡</span>
+                        <span class="card-back-name">Methi Seeds Water</span>
+                        <span class="card-back-heals">Joints · Hair · Blood sugar</span>
+                        <span class="card-back-how">Soak 1 tsp methi seeds overnight. Drink the water on an empty
+                            stomach at dawn.</span>
+                        <span class="card-back-gen">Dadi's morning ritual · Every single day</span>
+                        <button class="card-share-btn"
+                            onclick="shareRemedy(event,'Methi seeds soaked overnight, drink the water at dawn. Dadi never had joint pain. Nuskhe.')">Share
+                            this</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="parallax-divider"></div>
+
+    <!-- ======================================================
+       FRAME 4 — CONTRIBUTION / CONTACT
+  ====================================================== -->
+    <section id="frame-contribution">
+        <div class="contrib-header">
+            <p class="contrib-eyebrow">Your turn</p>
+            <h2 class="contrib-title">What did your Dadi know?</h2>
+            <div class="section-divider"></div>
+            <p class="contrib-sub">Tell us in any language. We'll keep it safe,<br>the way she kept it for you.</p>
+        </div>
+
+        <div class="contrib-form" id="contribForm">
+            <div class="form-field">
+                <label class="form-label" for="remedyName">What's the remedy called?</label>
+                <input class="form-input" id="remedyName" type="text"
+                    placeholder="Haldi wali chai, Dadi's special..." />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="remedyHeals">What did it heal?</label>
+                <input class="form-input" id="remedyHeals" type="text"
+                    placeholder="Sardi, pet dard, neend na aana..." />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="remedyWho">Who taught it to you?</label>
+                <input class="form-input" id="remedyWho" type="text" placeholder="Nani, Dadi, Maa, Bua..." />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="remedyLang">What language did they say it in?</label>
+                <input class="form-input" id="remedyLang" type="text"
+                    placeholder="Hindi, Punjabi, Tamil, Malayalam..." />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="remedyHow">Tell us how it was made</label>
+                <textarea class="form-textarea" id="remedyHow"
+                    placeholder="Just like she told you. No measurements needed."></textarea>
+            </div>
+            <button class="form-submit" onclick="submitRemedy()">Preserve this nuskha →</button>
+        </div>
+
+        <div id="thankYouMsg">
+            <div class="thankyou-icon">🌿</div>
+            <div class="thankyou-title">We've kept it safe.</div>
+            <div class="thankyou-body">The way she kept it for you.<br>Thank you for not letting it disappear.</div>
+        </div>
+
+        <h3 class="garden-title" id="gardenTitle" style="display:none;">The remedies people remembered →</h3>
+        <div class="remedy-garden" id="remedyGarden"></div>
+
+    </section>
+
+    <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+    <script>
+
+        /* ── CURSOR ── */
+        const cyCursor = document.getElementById('cy-cursor');
+        document.addEventListener('mousemove', e => {
+            cyCursor.style.left = e.clientX + 'px';
+            cyCursor.style.top = e.clientY + 'px';
+        });
+
+        /* ── STARS ── */
+        const starsContainer = document.getElementById('cyStars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'cy-star';
+            star.style.cssText = `
+        left: ${Math.random() * 100}%;
+        top:  ${Math.random() * 55}%;
+        --dur:   ${2 + Math.random() * 4}s;
+        --delay: ${Math.random() * 4}s;
+        opacity: ${0.2 + Math.random() * 0.6};
+      `;
+            starsContainer.appendChild(star);
+        }
+
+        /* ── LEAF BURST (canvas) ── */
+        const burstCanvas = document.getElementById('leafBurstCanvas');
+        const bCtx = burstCanvas.getContext('2d');
+        burstCanvas.width = window.innerWidth;
+        burstCanvas.height = window.innerHeight;
+        window.addEventListener('resize', () => {
+            burstCanvas.width = window.innerWidth;
+            burstCanvas.height = window.innerHeight;
+        });
+
+        let particles = [];
+
+        function createBurst(x, y) {
+            const colors = ['#2d5a1a', '#4a8a2a', '#6aaa40', '#8fbc5a', '#3d7a28', '#1a4010'];
+            for (let i = 0; i < 22; i++) {
+                const angle = (Math.PI * 2 / 22) * i + (Math.random() - 0.5) * 0.5;
+                const speed = 2 + Math.random() * 5;
+                particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 2,
+                    size: 5 + Math.random() * 8,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.2,
+                    life: 1,
+                });
+            }
+        }
+
+        function drawLeafParticle(ctx, p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.moveTo(0, -p.size);
+            ctx.quadraticCurveTo(p.size * 0.6, -p.size * 0.3, 0, p.size * 0.8);
+            ctx.quadraticCurveTo(-p.size * 0.6, -p.size * 0.3, 0, -p.size);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        let burstAnimating = false;
+        function animateBurst() {
+            if (particles.length === 0) { burstAnimating = false; return; }
+            burstAnimating = true;
+            bCtx.clearRect(0, 0, burstCanvas.width, burstCanvas.height);
+            particles = particles.filter(p => p.alpha > 0.01);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.15;
+                p.vx *= 0.98;
+                p.rotation += p.rotSpeed;
+                p.alpha -= 0.022;
+                p.life -= 0.022;
+                drawLeafParticle(bCtx, p);
+            });
+            requestAnimationFrame(animateBurst);
+        }
+
+        /* ── PLANT PUZZLE DRAG & SNAP ── */
+        const SNAP_RADIUS = 80;
+        let snappedCount = 0;
+        const totalPlants = 3;
+
+        const heroWord = document.getElementById('heroWord0');
+        const heroSub = document.getElementById('heroSub');
+        const siteName = document.getElementById('cySiteName');
+        const dragHint = document.getElementById('cyDragHint');
+        const scrollCue = document.getElementById('cyScrollCue');
+
+        function revealStep(wordIndex) {
+            if (wordIndex === 0) {
+                siteName.style.opacity = '1';
+            }
+            if (snappedCount >= totalPlants) {
+                heroWord.classList.add('word-revealed');
+                heroSub.classList.add('revealed');
+                dragHint.classList.add('hidden');
+                scrollCue.classList.add('visible');
+                createBurst(window.innerWidth / 2, window.innerHeight / 2 - 40);
+                if (!burstAnimating) animateBurst();
+            }
+        }
+
+        function getElCentre(el) {
+            const r = el.getBoundingClientRect();
+            return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        }
+
+        function makeDraggable(plant) {
+            let dragging = false;
+            let startMX, startMY, startLeft, startBottom;
+            const targetId = plant.dataset.target;
+            const wordIdx = parseInt(plant.dataset.word);
+            let snapped = false;
+
+            plant.addEventListener('mousedown', e => {
+                if (snapped) return;
+                dragging = true;
+                plant.classList.add('dragging');
+                startMX = e.clientX;
+                startMY = e.clientY;
+                const rect = plant.getBoundingClientRect();
+                startLeft = rect.left;
+                startBottom = window.innerHeight - rect.bottom;
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', e => {
+                if (!dragging) return;
+                const dx = e.clientX - startMX;
+                const dy = e.clientY - startMY;
+                plant.style.left = (startLeft + dx) + 'px';
+                plant.style.bottom = (startBottom - dy) + 'px';
+                plant.style.transform = 'none';
+
+                const silhouette = document.getElementById(targetId);
+                const plantC = getElCentre(plant);
+                const silC = getElCentre(silhouette);
+                const dist = Math.hypot(plantC.x - silC.x, plantC.y - silC.y);
+                if (dist < SNAP_RADIUS * 1.5) {
+                    silhouette.style.opacity = '0.55';
+                    silhouette.style.filter = 'brightness(0.5) sepia(1) saturate(5) hue-rotate(60deg)';
+                } else {
+                    silhouette.classList.contains('filled') || (silhouette.style.opacity = '');
+                    silhouette.style.filter = '';
+                }
+            });
+
+            document.addEventListener('mouseup', e => {
+                if (!dragging) return;
+                dragging = false;
+                plant.classList.remove('dragging');
+
+                const silhouette = document.getElementById(targetId);
+                const plantC = getElCentre(plant);
+                const silC = getElCentre(silhouette);
+                const dist = Math.hypot(plantC.x - silC.x, plantC.y - silC.y);
+
+                if (dist < SNAP_RADIUS) {
+                    snapped = true;
+                    snappedCount++;
+                    plant.classList.add('snapped');
+
+                    const silRect = silhouette.getBoundingClientRect();
+                    const parentRect = plant.parentElement.getBoundingClientRect();
+                    plant.style.left = (silRect.left - parentRect.left + silRect.width / 2) + 'px';
+                    plant.style.bottom = (parentRect.bottom - silRect.bottom) + 'px';
+                    plant.style.transform = 'translateX(-50%)';
+
+                    silhouette.classList.add('filled');
+                    silhouette.style.opacity = '0';
+
+                    createBurst(silC.x, silC.y);
+                    if (!burstAnimating) animateBurst();
+
+                    revealStep(wordIdx);
+                } else {
+                    silhouette.style.opacity = '';
+                    silhouette.style.filter = '';
+                }
+            });
+        }
+
+        document.querySelectorAll('.cy-plant').forEach(makeDraggable);
+
+        // ── SOUND ─────────────────────────────────────────
+        let soundEnabled = false;
+        const soundBtn = document.getElementById('soundToggle');
+
+        // ── QUIZ ──────────────────────────────────────────
+        const scoreBadge = document.getElementById('scoreBadge');
+        function selectGen(card) {
+            document.querySelectorAll('.quiz-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            const lost = card.dataset.lost;
+            const gen = card.dataset.gen;
+            scoreBadge.textContent = `🌿 You lost ${lost} of 7 remedies`;
+            scoreBadge.classList.add('visible');
+            const lanes = document.querySelectorAll('.gen-lane');
+            lanes.forEach(l => l.classList.remove('active', 'dimmed'));
+            lanes.forEach(l => {
+                if (l.id === 'lane-' + gen) l.classList.add('active');
+                else l.classList.add('dimmed');
+            });
+        }
+
+        // ── EXTINCT COUNTER ───────
+        let extinctSeen = 0;
+        const extinctBubbles = document.querySelectorAll('.bubble-extinct');
+        const extinctEl = document.getElementById('extinctCount');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting && !e.target.dataset.counted) {
+                    e.target.dataset.counted = '1';
+                    extinctSeen++;
+                    extinctEl.textContent = extinctSeen;
+                }
+            });
+        }, { threshold: 0.5 });
+        extinctBubbles.forEach(b => observer.observe(b));
+
+        // ── SHARE REMEDY ──────────────────────────────────
+        function shareRemedy(event, text) {
+            event.stopPropagation();
+            if (navigator.share) {
+                navigator.share({ title: 'Nuskhe', text });
+            } else {
+                navigator.clipboard.writeText(text);
+                const btn = event.target;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Share this', 2000);
+            }
+        }
+
+        // ── CONTRIBUTION FORM ─────────────────────────────
+        const seedRemedies = [
+            { icon: '🌶️', name: 'Adrak-elaichi chai', person: 'Nani, Lucknow' },
+            { icon: '🍯', name: 'Shahad aur nimbu', person: 'Dadi, Varanasi' },
+            { icon: '🧄', name: 'Lahsun ka taila', person: 'Maa, Amritsar' },
+        ];
+        const garden = document.getElementById('remedyGarden');
+        seedRemedies.forEach(r => addGardenTile(r));
+
+        function addGardenTile({ icon, name, person }) {
+            const tile = document.createElement('div');
+            tile.className = 'garden-tile';
+            tile.innerHTML = `<span class="garden-tile-icon">${icon}</span>
+        <span class="garden-tile-name">${name}</span>
+        <span class="garden-tile-person">from ${person}</span>`;
+            garden.appendChild(tile);
+        }
+
+        function submitRemedy() {
+            const name = document.getElementById('remedyName').value.trim();
+            const who = document.getElementById('remedyWho').value.trim();
+            if (!name) return;
+
+            const submissions = JSON.parse(localStorage.getItem('nuskhe_submissions') || '[]');
+            const entry = {
+                name,
+                heals: document.getElementById('remedyHeals').value,
+                who,
+                lang: document.getElementById('remedyLang').value,
+                how: document.getElementById('remedyHow').value,
+            };
+            submissions.push(entry);
+            localStorage.setItem('nuskhe_submissions', JSON.stringify(submissions));
+
+            document.getElementById('contribForm').style.display = 'none';
+            document.getElementById('thankYouMsg').classList.add('visible');
+            document.getElementById('gardenTitle').style.display = 'block';
+            addGardenTile({ icon: '🌿', name, person: who || 'a remembered home' });
+        }
+
+        window.addEventListener('load', () => {
+            const saved = JSON.parse(localStorage.getItem('nuskhe_submissions') || '[]');
+            if (saved.length > 0) {
+                document.getElementById('gardenTitle').style.display = 'block';
+                saved.forEach(s => addGardenTile({ icon: '🌿', name: s.name, person: s.who || 'a remembered home' }));
+            }
+        });
+
+        // Wilt cursor when hovering extinct bubbles
+        document.querySelectorAll('.bubble-extinct').forEach(b => {
+            b.addEventListener('mouseenter', () => {
+                cyCursor.classList.add('wilting');
+                setTimeout(() => cyCursor.classList.remove('wilting'), 700);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Flip Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --cream: #f5ede0;
+            --sepia-dark: #3b2a1a;
+            --sepia-mid: #7a5c3a;
+            --terracotta: #c1440e;
+            --card-width: 200px;
+            --card-height: 280px;
+        }
+
+        body {
+            background-color: var(--cream);
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Lora', serif;
+        }
+
+        /* The Card in the deck */
+        .card-preview {
+            width: var(--card-width);
+            height: var(--card-height);
+            background-image: url('images/card des.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 6px solid #fffff0;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-preview:hover {
+            transform: translateY(-20px) scale(1.05);
+        }
+
+        /* The Expanded "Flip" Modal */
+        #expanded-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(28, 28, 46, 0.4);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .expanded-card {
+            width: 650px;
+            background: #fffdfa;
+            border-radius: 24px;
+            display: flex;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(122, 92, 58, 0.1);
+            overflow: hidden;
+        }
+
+        #expanded-modal.active {
+            display: flex;
+        }
+
+        #expanded-modal.active .expanded-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Left Side: Illustration */
+        .card-illustration {
+            width: 45%;
+            background: #fdfbf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border-right: 1px dashed rgba(122, 92, 58, 0.2);
+            position: relative;
+        }
+
+        .card-illustration img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+
+        /* Right Side: Info */
+        .card-details {
+            width: 55%;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-tag {
+            font-family: 'Kalam', cursive;
+            font-size: 0.8rem;
+            color: var(--terracotta);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-style: italic;
+            color: var(--sepia-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-family: 'Kalam', cursive;
+            font-size: 0.9rem;
+            color: var(--sepia-mid);
+            margin-bottom: 0.25rem;
+            opacity: 0.7;
+        }
+
+        .detail-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--sepia-dark);
+            opacity: 0.9;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--sepia-mid);
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        /* Decorative flower in corner of modal */
+        .modal-deco {
+            position: absolute;
+            width: 80px;
+            bottom: -10px;
+            right: -10px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-preview" onclick="openFlip()"></div>
+
+    <div id="expanded-modal" onclick="closeFlip()">
+        <div class="expanded-card" onclick="event.stopPropagation()">
+            <div class="close-btn" onclick="closeFlip()">&times;</div>
+            
+            <div class="card-illustration">
+                <img src="images/kadakchaiimg.png" alt="Hero Ingredient">
+                <!-- Subtle texture overlay -->
+                <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');"></div>
+            </div>
+
+            <div class="card-details">
+                <span class="card-tag">Ancient Remedy</span>
+                <h2 class="card-title">Kadak Chai</h2>
+                
+                <div class="detail-section">
+                    <h3 class="detail-label">The Preparation</h3>
+                    <p class="detail-text">Boil strong CTC tea with ginger, cardamom, and a splash of buffalo milk until the color turns a deep, sun-baked terracotta.</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3 class="detail-label">The Benefits</h3>
+                    <p class="detail-text">Wakes up the spirit, clears the morning fog, and brings a sense of home to the coldest of days.</p>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-dashed border-sepia-mid/20">
+                    <p class="font-kalam text-sm italic text-sepia-mid">"A cup for the soul."</p>
+                </div>
+            </div>
+
+            <img src="images/flower_bale.png" class="modal-deco" alt="">
+        </div>
+    </div>
+
+    <script>
+        function openFlip() {
+            document.getElementById('expanded-modal').classList.add('active');
+        }
+        function closeFlip() {
+            document.getElementById('expanded-modal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
